@@ -95,7 +95,7 @@ endif;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(224, 116, 116, 0.7);
+            background: rgb(89, 150, 219);
             color: white;
             padding: 10px;
             opacity: 0;
@@ -119,7 +119,7 @@ endif;
             display: inline-block;
             margin-top: 20px;
             padding: 12px 25px;
-            background: #ff6f61;
+            background:rgb(89, 150, 219);
             color: white;
             text-decoration: none;
             border-radius: 5px;
@@ -151,7 +151,7 @@ endif;
         .info-section .cta-button {
             display: inline-block;
             padding: 12px 25px;
-            background: #ff6f61;
+            background:rgb(89, 150, 219);
             color: white;
             text-decoration: none;
             border-radius: 5px;
@@ -167,8 +167,8 @@ endif;
             padding: 20px;
         }
 
-        .SEE-MORE {
-            background-color: #ff6666;
+        .learn-more {
+            background-color:rgb(89, 150, 219);
             color: white;
             border: none;
             padding: 10px;
@@ -332,7 +332,7 @@ endif;
             /* Buttons */
             .cta-button,
             .info-section .cta-button,
-            .SEE-MORE {
+            .learn-more {
                 padding: 10px 15px;
                 font-size: 0.9rem;
             }
@@ -396,40 +396,40 @@ endif;
     <!-- Cards of Products -->
     <div class="cards">
         <div class="card">
-            <img src="/views/assets/images/Snacks (7)/Buldak hot.png" alt="Hydrating Moisturizer">
-            <div class="info">Deeply nourish your skin with our hydrating moisturizer. Perfect for all skin types.</div>
+            <img src="https://pfst.cf2.poecdn.net/base/image/3d8c2c16e953bf1a92c94dc5ab9ded8dcc2788ff5bca3067bff68afaf087555f?w=169&h=178&pmaid=343513914" alt="Hydrating Moisturizer">
+            <div class="info">Perfect for a fast and flavorful meal, suitable for lunch, dinner, or a late-night snack.</div>
         </div>
         <div class="card">
-            <img src="/views/assets/images/Snacks (7)/Mama Pork pack.png" alt="Vitamin C Serum">
-            <div class="info">Brighten your complexion with our powerful Vitamin C serum.</div>
+            <img src="https://pfst.cf2.poecdn.net/base/image/1965a9c16ce73349d259da9abc9004ba9c9b43f752c7effd84598a11fba0eca1?w=250&h=253&pmaid=343484602" alt="Vitamin C Serum">
+            <div class="info">Contains aloe vera for soothing properties, helping to calm chapped or irritated lips.</div>
         </div>
         <div class="card">
-            <img src="/views/assets/images/Snacks (7)/Good Noodle.png" alt="Sunscreen SPF 50">
-            <div class="info">Protect your skin from harmful UV rays with our lightweight sunscreen.</div>
+            <img src="https://pfst.cf2.poecdn.net/base/image/5aa6ae1348152e71698d05603dae45f56b76e9353abf603997529c5e8a6620cf?w=86&h=235&pmaid=343486079" alt="Sunscreen SPF 50">
+            <div class="info">Made from green tea, which is rich in antioxidants, promoting overall health.</div>
         </div>
         <div class="card">
-            <img src="/views/assets/images/Clothing(7)/Fineline Liquid Detergent.png" alt="Hydrating Moisturizer">
-            <div class="info">Deeply nourish your skin with our hydrating moisturizer. Perfect for all skin types.</div>
+            <img src="https://pfst.cf2.poecdn.net/base/image/f3ae46636d4454ec4d88a4856a272144721b51bf4d1a91b77e328a2a502fe52b?w=134&h=104&pmaid=343487270" alt="Hydrating Moisturizer">
+            <div class="info">Suitable for a variety of dishes, enhancing the taste of vegetables, grains, and more.</div>
         </div>
         <div class="card">
-            <img src="/views/assets/images/Clothing(7)/Comfort Blue.png" alt="Vitamin C Serum">
-            <div class="info">Brighten your complexion with our powerful Vitamin C serum.</div>
+            <img src="https://pfst.cf2.poecdn.net/base/image/ba55db6e9c450008c27c46b1c2fd866e786d0601fddc8b89bc2efc828e62275a?w=102&h=196&pmaid=343488987" alt="Vitamin C Serum">
+            <div class="info">Effectively tackle tough stains, ensuring clean laundry. a pleasant , leaving clothes smelling fresh after washing.</div>
         </div>
         <div class="card">
-            <img src="/views/assets/images/Clothing(7)/Pao Pink Detergent.png" alt="Sunscreen SPF 50">
-            <div class="info">Protect your skin from harmful UV rays with our lightweight sunscreen.</div>
+            <img src="https://pfst.cf2.poecdn.net/base/image/0b80d3a156c65be087659a85e81930d379f7a2e4735c7de82cd0919fa450bbb7?w=119&h=274&pmaid=343489914" alt="Sunscreen SPF 50">
+            <div class="info">Designed with medium bristles for effective cleaning while being gentle on gums.</div>
         </div>
         <div class="card">
-            <img src="/views/assets/images/Tissue (6)/keepo purple.png" alt="Sunscreen SPF 50">
-            <div class="info">Protect your skin from harmful UV rays with our lightweight sunscreen.</div>
+            <img src="https://pfst.cf2.poecdn.net/base/image/6b9a86a5e19557f2eee02364528bd78a3c1e2dcacf1de3926e43fc77c12cbbfd?w=144&h=183&pmaid=343490924" alt="Sunscreen SPF 50">
+            <div class="info">Available in a range of flavors, including chicken, pork, and seafood, catering to different tastes.</div>
         </div>
         <div class="card">
-            <img src="views/assets/images/Tissue (6)/Keepo Green.png" alt="Sunscreen SPF 50">
-            <div class="info">Protect your skin from harmful UV rays with our lightweight sunscreen.</div>
+            <img src="https://pfst.cf2.poecdn.net/base/image/b0fc9599a84fdb98b3856e3b0a9ede6d1277b69f7e987693839d2a0628fe71de?w=212&h=181&pmaid=343512640" alt="Sunscreen SPF 50">
+            <div class="info">Ideal for a variety of needs, including facial tissues, cleaning spills, or general hygiene.</div>
         </div>
         <div class="card">
-            <img src="/views/assets/images/Feminine Hygiene (10)/ACNES.png" alt="Sunscreen SPF 50">
-            <div class="info">Protect your skin from harmful UV rays with our lightweight sunscreen.</div>
+            <img src="https://pfst.cf2.poecdn.net/base/image/020a30cf12bce0781273a10fe90f880e33356b15e25305206df0e9aea6c3ea74?w=69&h=235&pmaid=343492573" alt="Sunscreen SPF 50">
+            <div class="info">Suitable as a dipping sauce, marinade, or ingredient in cooking for various dishes.</div>
         </div>
     </div>
 
@@ -437,12 +437,12 @@ endif;
     <div class="container">
         <div class="content-section">
             <div class="text-content">
-                <h2>Why Choose Glow Skincare?</h2>
-                <p>At Glow Skincare, we believe that everyone deserves to feel confident in their skin. Our products are crafted with the finest natural ingredients, scientifically proven to nourish and rejuvenate your skin.</p>
+                <h2>Why Milène Acne Clear facial foam?</h2>
+                <p>Formulated to help clear acne and prevent future breakoutsុំ​cleanse the skin without over-drying, suitable for daily use, contains salicylic acid or other acne-fighting ingredients to target blemishes effectively.</p>
                 <a href="#" class="cta-button">Discover Our Story</a>
             </div>
             <div class="image-content-right">
-                <img src="https://pfst.cf2.poecdn.net/base/image/1cedfbff3a4f6f1a9837f3e4e66693ac8ecab73788b82f5b6709bb825c6f94bf?w=201&h=201&pmaid=339853784" alt="Glow Skincare Products" style="width: 400px; height: 400px;">
+                <img src="https://pfst.cf2.poecdn.net/base/image/78c61c371f19015f65d09ca3ec819ae7278d16d0b88ebfe261952de6dc2380aa?w=234&h=255&pmaid=343449343" alt="Glow Skincare Products" style="width: 400px; height: 400px;">
             </div>
         </div>
     </div>
@@ -457,7 +457,7 @@ endif;
                     <img src="https://pfst.cf2.poecdn.net/base/image/0c03438664055ab8478d172526548fec29a8d2048473684bc2b84c9e73d41fad?w=107&h=270&pmaid=339868683" class="card-img-top" alt="Hydrating Moisturizer">
                     <div class="card-body">
                         <p class="card-text">Known for its fresh floral scent, which can help keep clothes smelling pleasant.</p>
-                        <button class="SEE-MORE" onclick="showDescription('Clothing', 'Designed to be effective in smaller quantities, providing maximum softness and fragrance which can help keep clothes smelling pleasant Helps to soften fabrics, making them more comfortable to wear Reduces static cling in laundry.')">Learn More</button>
+                        <button class="learn-more" onclick="showDescription('Clothing', 'Designed to be effective in smaller quantities, providing maximum softness and fragrance which can help keep clothes smelling pleasant Helps to soften fabrics, making them more comfortable to wear Reduces static cling in laundry.')">See more</button>
                     </div>
                 </div>
             </div>
@@ -466,7 +466,7 @@ endif;
                     <img src="https://pfst.cf2.poecdn.net/base/image/7a032e929fc97918618a90456fd51ab2d5b92394c71d102a80ec90bdb40d6558?w=203&h=203&pmaid=339863415" class="card-img-top" alt="Hydrating Moisturizer">
                     <div class="card-body">
                         <p class="card-text">Typically offers a satisfying texture, often with chewy noodles.</p>
-                        <button class="SEE-MORE" onclick="showDescription('Snacks', 'Often available in various flavors, including spicy and savory. options Quick and easy to prepare, making it a popular choice for meals or snacks, Usually includes a seasoning packet, which enhances the flavor profile.')">Learn More</button>
+                        <button class="learn-more" onclick="showDescription('Snacks', 'Often available in various flavors, including spicy and savory. options Quick and easy to prepare, making it a popular choice for meals or snacks, Usually includes a seasoning packet, which enhances the flavor profile.')">See more</button>
                     </div>
                 </div>
             </div>
@@ -475,7 +475,7 @@ endif;
                     <img src="https://pfst.cf2.poecdn.net/base/image/1e7ffbb8aaae97d7c2f7bf90826e43e2e8da2bd1ee82638dccfc58c672de5f24?w=200&h=299&pmaid=339861196" class="card-img-top" alt="Hydrating Moisturizer">
                     <div class="card-body">
                         <p class="card-text">Providing a gentle touch for sensitive skin typically has good absorbent properties.</p>
-                        <button class="SEE-MORE" onclick="showDescription('Tissue', 'Designed for comfort, providing a gentle touch for sensitive skin, durable and strong, suitable for various uses, including personal hygiene and household cleaning available in convenient packs for easy storage and use.')">Learn More</button>
+                        <button class="learn-more" onclick="showDescription('Tissue', 'Designed for comfort, providing a gentle touch for sensitive skin, durable and strong, suitable for various uses, including personal hygiene and household cleaning available in convenient packs for easy storage and use.')">See more</button>
                     </div>
                 </div>
             </div>
@@ -484,7 +484,7 @@ endif;
                     <img src="https://pfst.cf2.poecdn.net/base/image/148e15f672e9092e5a381cfede88d0ced996f663eab8adbc3ed3a7ff808d9e39?w=88&h=214&pmaid=339815535" class="card-img-top" alt="Hydrating Moisturizer">
                     <div class="card-body">
                         <p class="card-text">It's a great dairy-free alternative for those who are lactose intolerant or follow a vegan diet.</p>
-                        <button class="SEE-MORE" onclick="showDescription('Beverages', 'A nutritious, protein-rich product containing essential amino acids and fortified with vitamins B12 and D. It supports overall health and can be enjoyed on its own, in smoothies, or as a dairy substitute in cooking and baking.')">Learn More</button>
+                        <button class="learn-more" onclick="showDescription('Beverages', 'A nutritious, protein-rich product containing essential amino acids and fortified with vitamins B12 and D. It supports overall health and can be enjoyed on its own, in smoothies, or as a dairy substitute in cooking and baking.')">See more</button>
                     </div>
                 </div>
             </div>
@@ -492,8 +492,8 @@ endif;
                 <div class="card">
                     <img src="https://pfst.cf2.poecdn.net/base/image/089ff25ff2c6046fb05e5e36d6aa9a753896e05b0e347f27b4e4a8aa1898ad50?w=138&h=166&pmaid=339829140" class="card-img-top" alt="Hydrating Moisturizer">
                     <div class="card-body">
-                        <p class="card-text">Deeply nourish your skin with our hydrating moisturizer. Perfect for all skin types.</p>
-                        <button class="SEE-MORE" onclick="showDescription('Cooking ingredientts', 'Deeply nourish your skin with our hydrating moisturizer. Perfect for all skin types.')">Learn More</button>
+                        <p class="card-text">A popular choice for a quick snack or meal addition.</p>
+                        <button class="learn-more" onclick="showDescription('Cooking ingredientts', 'The product is sweet and creamy, making it popular for desserts and drinks. It can be used in coffee, tea, desserts, and various recipes to enhance flavor and texture. Additionally, it provides energy, making it a preferred option for quick snacks or meal additions.')">See more</button>
                     </div>
                 </div>
             </div>
@@ -501,8 +501,8 @@ endif;
                 <div class="card">
                     <img src="https://pfst.cf2.poecdn.net/base/image/7a365c10dcac757ca56800cd0bd516146c5c7485a0af83b706c28b948f96dd19?w=78&h=276&pmaid=339832885" class="card-img-top" alt="Hydrating Moisturizer">
                     <div class="card-body">
-                        <p class="card-text">Deeply nourish your skin with our hydrating moisturizer. Perfect for all skin types.</p>
-                        <button class="SEE-MORE" onclick="showDescription('Drinking Water', 'Deeply nourish your skin with our hydrating moisturizer. Perfect for all skin types.')">Learn More</button>
+                        <p class="card-text">Ideal for everyday hydration, whether at home, work, or during physical activities.</p>
+                        <button class="learn-more" onclick="showDescription('Drinking Water', 'Sourced from natural springs, providing pure and refreshing water, Sourced from natural springs, providing pure and refreshing water, Available in a 1-liter bottle, making it easy to carry and drink on the go.')">See more</button>
                     </div>
                 </div>
             </div>
@@ -510,8 +510,8 @@ endif;
                 <div class="card">
                     <img src="https://pfst.cf2.poecdn.net/base/image/03622d3855a4f17f8447eeffa758651f4312ac2bdd684ef6514fa63045519c57?w=217&h=187&pmaid=339844985" class="card-img-top" alt="Hydrating Moisturizer">
                     <div class="card-body">
-                        <p class="card-text">Deeply nourish your skin with our hydrating moisturizer. Perfect for all skin types.</p>
-                        <button class="SEE-MORE" onclick="showDescription('Feminine Hygiene', 'Deeply nourish your skin with our hydrating moisturizer. Perfect for all skin types.')">Learn More</button>
+                        <p class="card-text">Suitable for daily menstrual protection, providing comfort and confidence.</p>
+                        <button class="learn-more" onclick="showDescription('Feminine Hygiene', 'Typically features a thin profile for discreet wear while maintaining absorbency,  Engineered to provide reliable protection against leaks, suitable for various flow levels.')">See more</button>
                     </div>
                 </div>
             </div>
@@ -519,8 +519,8 @@ endif;
                 <div class="card">
                     <img src="https://pfst.cf2.poecdn.net/base/image/74ea91ca3c672cee823978bbd4960d29243fa2229f93855bf9a707bbd17c8686?w=154&h=154&pmaid=339846928" class="card-img-top" alt="Hydrating Moisturizer">
                     <div class="card-body">
-                        <p class="card-text">Deeply nourish your skin with our hydrating moisturizer. Perfect for all skin types.</p>
-                        <button class="SEE-MORE" onclick="showDescription('House Hold Hygiene', 'Deeply nourish your skin with our hydrating moisturizer. Perfect for all skin types.')">Learn More</button>
+                        <p class="card-text">Suitable for washing dishes, pots, pans, and even surfaces in the kitchen.</p>
+                        <button class="learn-more" onclick="showDescription('House Hold Hygiene', 'Formulated to effectively cut through grease and food residues, making dishwashing easier, with a lemon or lime fragrance, leaving dishes smelling fresh,Suitable for washing dishes, pots, pans, and even surfaces in the kitchen.')">See more</button>
                     </div>
                 </div>
             </div>
@@ -528,8 +528,8 @@ endif;
                 <div class="card">
                     <img src="https://pfst.cf2.poecdn.net/base/image/614918d19ba25a4c73343dbf9478b5c131483322c0e05f4ff01fcd1ac326d308?w=69&h=236&pmaid=339849784" class="card-img-top" alt="Hydrating Moisturizer">
                     <div class="card-body">
-                        <p class="card-text">Deeply nourish your skin with our hydrating moisturizer. Perfect for all skin types.</p>
-                        <button class="SEE-MORE" onclick="showDescription('Oral Health', 'Deeply nourish your skin with our hydrating moisturizer. Perfect for all skin types.')">Learn More</button>
+                        <p class="card-text">Formulated to help prevent cavities and promote overall dental health.</p>
+                        <button class="learn-more" onclick="showDescription('Oral Health', 'Many variants include ingredients that help remove surface stains for a brighter smile, contains mint flavors that provide long-lasting freshness, helps fight tooth decay.')">See more</button>
                     </div>
                 </div>
             </div>
@@ -570,7 +570,7 @@ endif;
                 <div class="container">
                     <h2>About Our Products</h2>
                     <p>At DAILY NEEDS, we are committed to providing you with products that are not only effective, but also safe and sustainable.</p>
-                    <a href="#" class="cta-button">Learn More About Us</a>
+                    <a href="#" class="cta-button">See More About Us</a>
                 </div>
             </div>
 
