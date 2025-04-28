@@ -1,5 +1,30 @@
 <h1>STOCK IN</h1>
-<!-- Stock History Table -->
+
+<!-- CSS -->
+<style>
+    .image1-wrapper {
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .image1-wrapper img {
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+
+    .table td, .table th {
+        vertical-align: middle;
+        height: 60px;
+    }
+</style>
+
+<!-- Table -->
 <div class="card p-4 shadow mt-4">
     <h5 class="mb-3">STOCK HISTORY</h5>
     <table class="table table-bordered">
@@ -17,7 +42,12 @@
             <?php if (!empty($data['stockHistory'])): ?>
                 <?php foreach ($data['stockHistory'] as $row): ?>
                     <tr> 
-                        <td><img src="/<?php echo htmlspecialchars($row['product_image']); ?>" alt="<?php echo htmlspecialchars($row['product']); ?>" width="50" height="50"></td>
+                        <td>
+                            <div class="image1-wrapper">
+                                <img src="/<?php echo htmlspecialchars($row['product_image']); ?>"
+                                     alt="<?php echo htmlspecialchars($row['product']); ?>">
+                            </div>
+                        </td>
                         <td><?php echo htmlspecialchars($row['product']); ?></td>
                         <td><?php echo htmlspecialchars($row['quantity_in']); ?></td>
                         <td><?php echo htmlspecialchars($row['type']); ?></td>
@@ -26,7 +56,7 @@
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
-                <tr><td colspan="6">No stock in history available.</td></tr> <!-- Updated colspan to 6 -->
+                <tr><td colspan="6">No stock in history available.</td></tr>
             <?php endif; ?>
         </tbody>
     </table>

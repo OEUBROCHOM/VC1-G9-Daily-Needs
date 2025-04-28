@@ -1,4 +1,6 @@
    <style>
+  
+
      .hygiene-section .card {
        height: 95%;
        display: flex;
@@ -141,8 +143,9 @@
          <div class="col-md-6">
            <div class="hero-content">
              <h4>Best Quality Products</h4>
-             <h1>Ranger Scout <br> Low Smoke Coil</h1>
-             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+             <h1>ACNES </h1>
+             <p>
+               ACNES provides high-quality skincare solutions specially formulated to fight acne, reduce inflammation, and restore your skin's natural glow. Trusted by millions, our products are dermatologically tested and safe for everyday use.</p>
              <a href="/product" class="shop-btn"><i class="bi bi-cart"></i> Shop Now</a>
            </div>
          </div>
@@ -210,7 +213,7 @@
                  <span class="rating-value" id="rating-value-1">(0)</span>
                </div>
                <p class="card-text small">Product description goes here.</p>
-               <div class="price mt-auto fw-bold">Price: $50.99</div>
+               <div class="price mt-auto fw-bold">Price: $1</div>
                <div class="d-flex justify-content-between mt-2">
                  <button class="btn btn-purple text-white" onclick="addToCart(1)">
                    <i class="bi bi-cart"></i> Add​ to card
@@ -243,8 +246,8 @@
                  <span class="star" onclick="setRating(1, 5)" onmouseover="highlightStars(1, 5)" onmouseout="resetStars(1)">★</span>
                  <span class="rating-value" id="rating-value-1">(0)</span>
                </div>
-               <p class="card-text small">Product description goes here.</p>
-               <div class="price mt-auto fw-bold">Price: $50.99</div>
+               <p class="card-text small">Pao Pink 4300g Powder .</p>
+               <div class="price mt-auto fw-bold">Price: $7.00</div>
                <div class="d-flex justify-content-between mt-2">
                  <button class="btn btn-purple text-white" onclick="addToCart(1)">
                    <i class="bi bi-cart"></i> Add to card
@@ -278,7 +281,7 @@
                  <span class="rating-value" id="rating-value-1">(0)</span>
                </div>
                <p class="card-text small">Product description goes here.</p>
-               <div class="price mt-auto fw-bold">Price: $50.99</div>
+               <div class="price mt-auto fw-bold">Price: $1.5</div>
                <div class="d-flex justify-content-between mt-2">
                  <button class="btn btn-purple text-white" onclick="addToCart(1)">
                    <i class="bi bi-cart"></i> Add to card
@@ -312,7 +315,7 @@
                  <span class="rating-value" id="rating-value-2">(0)</span>
                </div>
                <p class="card-text small">Another product description.</p>
-               <div class="price mt-auto fw-bold">Price: $29.99</div>
+               <div class="price mt-auto fw-bold">Price: $1.5</div>
                <div class="d-flex justify-content-between mt-2">
                  <button class="btn btn-purple text-white" onclick="addToCart(2)">
                    <i class="bi bi-cart"></i> Add to card
@@ -427,7 +430,7 @@
                    <span class="trending-star star" data-star="5" onclick="setRating(2, 5)">☆</span>
                    <span class="trending-rating-value rating-value" data-rating-id="2">(0)</span>
                  </div>
-                 <div class="trending-price price mt-auto">Price: $9.15</div>
+                 <div class="trending-price price mt-auto">Price: $1</div>
                  <div class="trending-actions d-flex justify-content-between mt-2">
                    <button class="trending-cart-btn btn btn-purple text-white" onclick="addToCart(2)"><i class="bi bi-cart"></i> Add to Cart</button>
                    <button class="trending-buy-btn btn btn-green text-white" style="border-radius: 8px;"><i class="bi bi-check-circle"></i> Buy Now</button>
@@ -456,7 +459,7 @@
                    <span class="trending-star star" data-star="5" onclick="setRating(3, 5)">☆</span>
                    <span class="trending-rating-value rating-value" data-rating-id="3">(0)</span>
                  </div>
-                 <div class="trending-price price mt-auto">Price: $9.15</div>
+                 <div class="trending-price price mt-auto">Price: $3.2</div>
                  <div class="trending-actions d-flex justify-content-between mt-2">
                    <button class="trending-cart-btn btn btn-purple text-white" onclick="addToCart(3)"><i class="bi bi-cart"></i> Add to Cart</button>
                    <button class="trending-buy-btn btn btn-green text-white" style="border-radius: 8px;"><i class="bi bi-check-circle"></i> Buy Now</button>
@@ -485,7 +488,7 @@
                    <span class="trending-star star" data-star="5" onclick="setRating(4, 5)">☆</span>
                    <span class="trending-rating-value rating-value" data-rating-id="4">(0)</span>
                  </div>
-                 <div class="trending-price price mt-auto">Price: $9.15</div>
+                 <div class="trending-price price mt-auto">Price: $1.5</div>
                  <div class="trending-actions d-flex justify-content-between mt-2">
                    <button class="trending-cart-btn btn btn-purple text-white" onclick="addToCart(4)"><i class="bi bi-cart"></i> Add to Cart</button>
                    <button class="trending-buy-btn btn btn-green text-white" style="border-radius: 8px;"><i class="bi bi-check-circle"></i> Buy Now</button>
@@ -514,10 +517,15 @@
                    <span class="trending-star star" data-star="5" onclick="setRating(5, 5)">☆</span>
                    <span class="trending-rating-value rating-value" data-rating-id="5">(0)</span>
                  </div>
-                 <div class="trending-price price mt-auto">Price: $9.15</div>
+                 <div class="trending-price price mt-auto">Price: $7.1</div>
                  <div class="trending-actions d-flex justify-content-between mt-2">
-                   <button class="trending-cart-btn btn btn-purple text-white" onclick="addToCart(5)"><i class="bi bi-cart"></i> Add to Cart</button>
-                   <button class="trending-buy-btn btn btn-green text-white" style="border-radius: 8px;"><i class="bi bi-check-circle"></i> Buy Now</button>
+                   <button class="btn btn-purple text-white" onclick="addToCart(5)">
+                     <i class="bi bi-check-circle"></i> Add to Cart
+                   </button>
+
+                   <button class="btn btn-green text-white" style="border-radius: 8px;">
+                     <i class="bi bi-check-circle"></i> Buy Now
+                   </button>
                  </div>
                </div>
              </div>​
@@ -529,7 +537,9 @@
          <div class="testimonial-card">
            <div class="stars">★★★★★</div>
 
-           <p>Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+           <p>Experience exceptional cleaning power that removes tough stains while protecting your fabrics
+             Choose from our biodegradable formulas designed for eco-conscious households
+             Enjoy premium quality results at prices that fit every budget</p>
            <img src="https://i.imgur.com/8Km9tLL.png" alt="User" class="user-avatar">
            <h6>Mila Kunis</h6>
          </div>
@@ -543,7 +553,9 @@
          <!-- Testimonial Card 2 -->
          <div class="testimonial-card">
            <div class="stars">★★★★★</div>
-           <p>Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+           <p> Unmatched stain removal that preserves fabric quality
+             Environmentally responsible biodegradable options
+             Premium performance at budget-friendly prices you can paragrap</p>
            <img src="https://i.imgur.com/8Km9tLL.png" alt="User" class="user-avatar">
            <h6>Mila Kunis</h6>
          </div>

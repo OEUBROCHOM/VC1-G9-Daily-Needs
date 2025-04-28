@@ -385,6 +385,7 @@
                                     <button class="btn btn-purple text-white" onclick="addToCart(1)"><i class="bi bi-cart"></i> Add to Cart</button> 
                                     <button class="btn btn-green text-white" style="border-radius: 8px;"><i class="bi bi-check-circle"></i> Buy Now</button>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>

@@ -327,7 +327,7 @@ $applied_coupon = isset($_SESSION['applied_coupon']) ? $_SESSION['applied_coupon
                                             <a href="#!" class="dropdown-item"><i class="ti ti-user"></i><span>Account Settings</span></a>
                                             <a href="#!" class="dropdown-item"><i class="ti ti-lock"></i><span>Privacy Center</span></a>
                                             <a href="#!" class="dropdown-item"><i class="ti ti-messages"></i><span>Feedback</span></a>
-                                            <a href="#!" class="dropdown-item"><i class="ti ti-list"></i><span>History</span></a>
+                                            <a href="/order_h" class="dropdown-item"><i class="ti ti-list"></i><span>History</span></a>
                                         </div>
                                     </div>
                                 <?php else: ?>

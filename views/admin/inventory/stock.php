@@ -2,7 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-if (isset($_SESSION['user_id'])) : 
+if (isset($_SESSION['user_id'])) :
     require_once "Models/ProductModel.php";
     $productModel = new ProductModel();
     $dbProducts = $productModel->getProducts();
@@ -215,6 +215,7 @@ if (isset($_SESSION['user_id'])) :
                 opacity: 0;
                 transform: translateY(10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -459,15 +460,17 @@ if (isset($_SESSION['user_id'])) :
             }
         }
     </style>
-</head>
-<body>
+    </head>
 
-        <!-- Main Content -->
+    <body>
+
+        
         <!-- Banner -->
         <div class="banner">
             <div class="banner-overlay"></div>
             <div class="banner-content">
-                <h1>Discount up to 50% from Answear Club Original Goods</h1>
+            <h1 style="color: white;">Discount up to 50% from Answear Club Original Goods</h1>
+
                 <p>PROMOCODE: 10030</p>
                 <a href="#" class="btn">Shop Now</a>
             </div>
@@ -490,146 +493,166 @@ if (isset($_SESSION['user_id'])) :
                         9 => 'Soap'
                     ];
                     $category_icons = [
-                        1 => 'bi-droplet',
-                        2 => 'bi-cup-straw',
-                        3 => 'bi-box',
-                        4 => 'bi-basket',
-                        5 => 'bi-egg',
-                        6 => 'bi-shield',
-                        7 => 'bi-tooth',
-                        8 => 'bi-heart',
-                        9 => 'bi-droplet-fill'
+                        1 => ['icon' => 'bi-droplet', 'color' => 'text-primary'],
+                        2 => ['icon' => 'bi-cup-straw', 'color' => 'text-danger'], 
+                        3 => ['icon' => 'bi-box', 'color' => 'text-success'], 
+                        4 => ['icon' => 'bi-basket', 'color' => 'text-warning'],
+                        5 => ['icon' => 'bi-egg', 'color' => 'text-info'], 
+                        6 => ['icon' => 'bi-shield', 'color' => 'text-success'], 
+                        7 => ['icon' => 'bi-basket', 'color' => 'text-warning'], 
+                        8 => ['icon' => 'bi-heart', 'color' => 'text-danger'], 
+                        9 => ['icon' => 'bi-droplet-fill', 'color' => 'text-primary'] 
                     ];
-                    $selected_category = isset($_GET['category']) ? (int)$_GET['category'] : 1; // Default to Beverages
-
+                    $selected_category = isset($_GET['category']) ? (int)$_GET['category'] : 1; 
+                    
                     foreach ($categories as $id => $name) : ?>
                         <form method="GET" action="" class="category-card d-block text-decoration-none text-dark <?php echo $selected_category === $id ? 'active' : ''; ?>">
                             <input type="hidden" name="category" value="<?php echo $id; ?>">
                             <button type="submit" style="border: none; background: none; width: 100%; text-align: left;">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span><?php echo $name; ?></span>
-                                    <i class="bi <?php echo $category_icons[$id]; ?>"></i>
+                                    
+                                    <i class="bi <?php echo $category_icons[$id]['icon']; ?> <?php echo $category_icons[$id]['color']; ?>"></i>
                                 </div>
                             </button>
                         </form>
                     <?php endforeach; ?>
+                    
                 </div>
             </div>
 
-            <!-- Product Grid -->
-            <div class="col-md-9">
-                <h4 class="mb-3"><?php echo $categories[$selected_category]; ?></h4>
-                <div class="filter-section">
-                    <form method="GET" action="" class="scan-product">
-                        <input type="hidden" name="category" value="<?php echo $selected_category; ?>">
-                        <input type="text" name="barcode" placeholder="Scan Product Barcode..." value="<?php echo isset($_GET['barcode']) ? htmlspecialchars($_GET['barcode']) : ''; ?>">
-                        <button type="submit" class="btn"><i class="bi bi-upc-scan me-1"></i> Scan</button>
-                    </form>
-                </div>
+           <!-- Product Grid -->
+<div class="col-md-9">
+    <h4 class="mb-3"><?php echo $categories[$selected_category]; ?></h4>
+    <div class="filter-section">
+        <form method="GET" action="" class="scan-product">
+            <input type="hidden" name="category" value="<?php echo $selected_category; ?>">
+            <input type="text" name="barcode" placeholder="Scan Product Barcode..." value="<?php echo isset($_GET['barcode']) ? htmlspecialchars($_GET['barcode']) : ''; ?>">
+            <button type="submit" class="btn"><i class="bi bi-upc-scan me-1"></i> Scan</button>
+        </form>
+    </div>
 
-                <div class="product-grid">
-                    <?php
-                    // Map database categories to category IDs
-                    $category_map = array_flip($categories); // e.g., 'Drinking Water' => 1
+    <div class="product-grid d-flex flex-wrap gap-4">
+        <?php
+        $category_map = array_flip($categories);
 
-                    // Organize products by category ID
-                    $all_products = [];
-                    foreach ($dbProducts as $product) {
-                        $category_name = $product['categories'];
-                        $category_id = isset($category_map[$category_name]) ? $category_map[$category_name] : 0;
-                        if ($category_id === 0) continue; // Skip if category doesn't match
+        $all_products = [];
+        foreach ($dbProducts as $product) {
+            $category_name = $product['categories'];
+            $category_id = isset($category_map[$category_name]) ? $category_map[$category_name] : 0;
+            if ($category_id === 0) continue;
 
-                        $stock_status = $product['stockquantity'] <= 5 ? 'low' : 'high';
-                        $all_products[$category_id][] = [
-                            'id' => $product['id'],
-                            'barcode' => $product['id'] . '000', // Generate a dummy barcode if not in DB
-                            'img' => $product['imageURL'],
-                            'alt' => $product['productname'],
-                            'title' => $product['productname'],
-                            'creator' => 'Creator', // Adjust if you have a creator field
-                            'price' => $product['price'],
-                            'stock' => $product['stockquantity'],
-                            'stock_status' => $stock_status
-                        ];
-                    }
+            $stock_status = $product['stockquantity'] <= 5 ? 'low' : 'high';
+            $all_products[$category_id][] = [
+                'id' => $product['id'],
+                'barcode' => $product['id'] . '000',
+                'img' => $product['imageURL'],
+                'alt' => $product['productname'],
+                'title' => $product['productname'],
+                'creator' => 'Creator',
+                'price' => $product['price'],
+                'stock' => $product['stockquantity'],
+                'stock_status' => $stock_status
+            ];
+        }
 
-                    // Get the products for the selected category
-                    $products = $all_products[$selected_category] ?? [];
+        $products = $all_products[$selected_category] ?? [];
 
-                    // Filter products based on scanned barcode
-                    $scanned_barcode = isset($_GET['barcode']) ? trim($_GET['barcode']) : '';
-                    $filtered_products = [];
+        $scanned_barcode = isset($_GET['barcode']) ? trim($_GET['barcode']) : '';
+        $filtered_products = [];
 
-                    if (!empty($scanned_barcode)) {
-                        $found = false;
-                        foreach ($products as $product) {
-                            if ($product['barcode'] === $scanned_barcode) {
-                                $filtered_products[] = $product;
-                                $found = true;
-                            }
+        if (!empty($scanned_barcode)) {
+            foreach ($products as $product) {
+                if ($product['barcode'] === $scanned_barcode) {
+                    $filtered_products[] = $product;
+                    break;
+                }
+            }
+            if (empty($filtered_products)) {
+                foreach ($all_products as $category_products) {
+                    foreach ($category_products as $product) {
+                        if ($product['barcode'] === $scanned_barcode) {
+                            $filtered_products[] = $product;
+                            break 2;
                         }
-                        if (!$found) {
-                            // If no product is found in the current category, search all categories
-                            foreach ($all_products as $category_products) {
-                                foreach ($category_products as $product) {
-                                    if ($product['barcode'] === $scanned_barcode) {
-                                        $filtered_products[] = $product;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        $filtered_products = $products; // Show all products in the category if no barcode is scanned
                     }
+                }
+            }
+        } else {
+            $filtered_products = $products;
+        }
 
-                    // Display filtered products
-                    if (empty($filtered_products)) : ?>
-                        <div class="no-results">
-                            <p>No products found for barcode: <?php echo htmlspecialchars($scanned_barcode); ?></p>
-                        </div>
-                    <?php else : ?>
-                        <?php foreach ($filtered_products as $product) : ?>
-                            <div class="product-card">
-                                <img src="<?php echo $product['img']; ?>" alt="<?php echo $product['alt']; ?>">
-                                <div class="card-body">
-                                    <h5><?php echo $product['title']; ?></h5>
-                                    <p class="creator"><?php echo $product['creator']; ?></p>
-                                    <p class="price">$<?php echo number_format($product['price'], 2); ?></p>
-                                    <div class="stock-info">
-                                        <span class="<?php echo $product['stock_status'] === 'low' ? 'stock-low' : 'stock-high'; ?>">
-                                            Stock: <?php echo $product['stock']; ?>
-                                        </span>
-                                        <i class="bi bi-<?php echo $product['stock_status'] === 'low' ? 'exclamation-triangle stock-low' : 'check-circle stock-high'; ?> stock-icon"></i>
-                                    </div>
-                                    <!-- Action Buttons -->
-                                    <div class="card-actions">
-                                        <form method="GET" action="/products/edit/<?php echo $product['id']; ?>">
-                                            <button type="submit" class="edit-btn">
+        if (empty($filtered_products)) : ?>
+            <div class="no-results">
+                <p>No products found for barcode: <?php echo htmlspecialchars($scanned_barcode); ?></p>
+            </div>
+        <?php else : ?>
+            <?php foreach ($filtered_products as $product) : ?>
+                <div class="product-card bg-white border rounded shadow-sm p-3" style="width: 240px; position: relative;">
+                    <!-- Product Image Container (Fixed Size) -->
+                    <div style="width: 100%; height: 150px; overflow: hidden; border-radius: 0.5rem;">
+                        <img src="<?php echo $product['img']; ?>"
+                            alt="<?php echo $product['alt']; ?>"
+                            style="width: 100%; height: 100%; object-fit: contain; background-color: #f8f9fa; padding: 5px;">
+                    </div>
+                    <div class="card-body p-0">
+                        <h6 class="fw-bold mb-1"><?php echo $product['title']; ?></h6>
+
+                        <!-- Creator & Three Dots in Same Row -->
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <p class="text-muted mb-0 small"><?php echo $product['creator']; ?></p>
+
+                            <!-- Only Dropdown Icon (No Button) -->
+                            <div class="dropdown">
+                                <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton<?php echo $product['id']; ?>">
+                                    <!-- Edit -->
+                                    <li>
+                                        <form method="GET" action="/products/edit/<?php echo $product['id']; ?>" class="px-3 m-0">
+                                            <button type="submit" class="btn btn-link text-start w-100">
                                                 <i class="bi bi-pencil"></i> Edit
                                             </button>
                                         </form>
-                                        <form method="POST" action="/products/delete/<?php echo $product['id']; ?>">
-                                            <button type="submit" class="delete-btn">
-                                                <a href=""></a><i class="bi bi-trash"></i> Delete
+                                    </li>
+                                    <!-- Delete -->
+                                    <li>
+                                        <form method="POST" action="/products/delete/<?php echo $product['id']; ?>" class="px-3 m-0">
+                                            <button type="submit" class="btn btn-link text-start w-100 text-danger"
+                                                onclick="return confirm('Are you sure you want to delete this product?');">
+                                                <i class="bi bi-trash"></i> Delete
                                             </button>
                                         </form>
-                                        <form method="GET" action="/add-stock-form/<?php echo $product['id']; ?>">
-                                            <button type="submit" class="add-btn">
-                                                <a href="/add-product"><i class="bi bi-plus-circle"></i> Add</a>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
+                                    </li>
+                                    <!-- Add Product -->
+                                    <li>
+                                        <a href="/add-product" class="dropdown-item text-success">
+                                            <i class="bi bi-plus-circle"></i> Add Product
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
+                        </div>
+
+                        <!-- Price -->
+                        <p class="mb-1 text-primary fw-semibold">$<?php echo number_format($product['price'], 2); ?></p>
+
+                        <!-- Stock Info -->
+                        <div class="stock-info d-flex align-items-center">
+                            <span class="<?php echo $product['stock_status'] === 'low' ? 'text-danger' : 'text-success'; ?> me-2">
+                                Stock: <?php echo $product['stock']; ?>
+                            </span>
+                            <i class="bi bi-<?php echo $product['stock_status'] === 'low' ? 'exclamation-triangle-fill text-danger' : 'check-circle-fill text-success'; ?>"></i>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
-</body>
-</html>
+</div>
+
+    </body>
+
+    </html>
 <?php
 else:
     $this->redirect("/login");

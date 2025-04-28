@@ -72,9 +72,15 @@ class OrderModel {
                          WHERE oi.order_id = o.id 
                          LIMIT 1) AS product_name, 
                         u.username, 
-                        u.profile AS user_profile 
+                        u.profile AS user_profile,
+                        r.return_reason AS return_details,
+                        r.requested_product_id,
+                        r.status AS return_status,
+                        l.location_name
                  FROM orders o 
                  LEFT JOIN users u ON o.user_id = u.id 
+                 LEFT JOIN returns r ON o.id = r.order_id
+                 LEFT JOIN locations l ON o.location_id = l.id
                  ORDER BY o.orderdate ASC"
             );
             return $result->fetchAll(PDO::FETCH_ASSOC);
@@ -84,15 +90,27 @@ class OrderModel {
         }
     }
 
+    public function getAvailableProducts() {
+        try {
+            $result = $this->db->query(
+                "SELECT id, productname, price, stockquantity
+                 FROM products
+                 WHERE stockquantity > 0"
+            );
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Error fetching available products: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
     public function deleteOrder($order_id) {
         try {
-            // Delete related transactions
             $this->db->query(
                 "DELETE FROM transactions WHERE order_id = :order_id",
                 ['order_id' => $order_id]
             );
 
-            // Delete the order (orderitems will be deleted automatically due to ON DELETE CASCADE)
             $this->db->query(
                 "DELETE FROM orders WHERE id = :order_id",
                 ['order_id' => $order_id]
@@ -108,17 +126,20 @@ class OrderModel {
 
     public function updateOrderStatus($order_id, $new_status) {
         try {
-            // Check if the order exists
             $orderExists = $this->db->query(
                 "SELECT id FROM orders WHERE id = :order_id",
                 ['order_id' => $order_id]
             )->fetch(PDO::FETCH_ASSOC);
-    
+
             if (!$orderExists) {
-                throw new Exception("Order with ID $order_id does not exist.");
+                throw new Exception("Order not found");
             }
-    
-            // Update the order status
+
+            $validStatuses = ['Pending', 'Delivered', 'Canceled', 'Returned'];
+            if (!in_array($new_status, $validStatuses)) {
+                throw new Exception("Invalid order status");
+            }
+
             $this->db->query(
                 "UPDATE orders SET orderstatus = :orderstatus WHERE id = :order_id",
                 [
@@ -126,7 +147,17 @@ class OrderModel {
                     'order_id' => $order_id
                 ]
             );
-    
+
+            $this->db->query(
+                "INSERT INTO notifications (user_id, message, notedate)
+                 SELECT user_id, CONCAT('Order #', :order_id, ' status updated to ', :orderstatus), NOW()
+                 FROM orders WHERE id = :order_id",
+                [
+                    'order_id' => $order_id,
+                    'orderstatus' => $new_status
+                ]
+            );
+
             return true;
         } catch (Exception $e) {
             error_log("Error updating order status: " . $e->getMessage());
@@ -136,32 +167,51 @@ class OrderModel {
 
     public function cancelOrder($order_id) {
         try {
-            // Check if the order exists and is in a cancellable state (Pending)
             $order = $this->db->query(
-                "SELECT orderstatus FROM orders WHERE id = :order_id",
+                "SELECT orderstatus, user_id FROM orders WHERE id = :order_id",
                 ['order_id' => $order_id]
             )->fetch(PDO::FETCH_ASSOC);
 
             if (!$order) {
-                throw new Exception("Order with ID $order_id does not exist.");
+                throw new Exception("Order not found");
             }
 
-            if ($order['orderstatus'] !== 'Pending') {
-                throw new Exception("Order cannot be canceled: Current status is {$order['orderstatus']}. Only Pending orders can be canceled.");
+            if ($order['orderstatus'] === 'Canceled') {
+                throw new Exception("Order is already canceled");
             }
 
-            // Call the stored procedure to cancel the order and update inventory
+            if (in_array($order['orderstatus'], ['Delivered', 'Returned'])) {
+                throw new Exception("Cannot cancel a delivered or returned order");
+            }
+
             $this->db->query(
-                "CALL CancelOrder(:order_id)",
+                "UPDATE orders SET orderstatus = 'Canceled' WHERE id = :order_id",
                 ['order_id' => $order_id]
             );
 
-            // Log a notification for the user
             $this->db->query(
-                "INSERT INTO notifications (user_id, message, notedate) 
-                 SELECT user_id, CONCAT('Your order #', :order_id, ' has been canceled due to expiration.'), NOW() 
-                 FROM orders WHERE id = :order_id",
+                "UPDATE products p
+                 JOIN orderitems oi ON p.id = oi.product_id
+                 SET p.stockquantity = p.stockquantity + oi.quantity
+                 WHERE oi.order_id = :order_id",
                 ['order_id' => $order_id]
+            );
+
+            $this->db->query(
+                "INSERT INTO inventory (product_id, stockIn, stockOut, updatedate)
+                 SELECT oi.product_id, oi.quantity, 0, NOW()
+                 FROM orderitems oi
+                 WHERE oi.order_id = :order_id",
+                ['order_id' => $order_id]
+            );
+
+            $this->db->query(
+                "INSERT INTO notifications (user_id, message, notedate)
+                 VALUES (:user_id, CONCAT('Order #', :order_id, ' has been canceled.'), NOW())",
+                [
+                    'user_id' => $order['user_id'],
+                    'order_id' => $order_id
+                ]
             );
 
             return true;
@@ -173,30 +223,164 @@ class OrderModel {
 
     public function cancelExpiredPendingOrders() {
         try {
-            // Select all Pending orders older than 48 hours
-            $result = $this->db->query(
-                "SELECT id 
-                 FROM orders 
-                 WHERE orderstatus = 'Pending' 
-                 AND orderdate <= DATE_SUB(NOW(), INTERVAL 48 HOUR)"
-            );
-            $expiredOrders = $result->fetchAll(PDO::FETCH_ASSOC);
-
-            if (empty($expiredOrders)) {
-                return 0; // No orders to cancel
-            }
+            $expiredOrders = $this->db->query(
+                "SELECT id, user_id
+                 FROM orders
+                 WHERE orderstatus = 'Pending'
+                 AND orderdate < NOW() - INTERVAL 24 HOUR"
+            )->fetchAll(PDO::FETCH_ASSOC);
 
             $canceledCount = 0;
+
             foreach ($expiredOrders as $order) {
-                $this->cancelOrder($order['id']); // Use the existing cancelOrder method
+                $this->db->query(
+                    "UPDATE orders SET orderstatus = 'Canceled' WHERE id = :order_id",
+                    ['order_id' => $order['id']]
+                );
+
+                $this->db->query(
+                    "UPDATE products p
+                     JOIN orderitems oi ON p.id = oi.product_id
+                     SET p.stockquantity = p.stockquantity + oi.quantity
+                     WHERE oi.order_id = :order_id",
+                    ['order_id' => $order['id']]
+                );
+
+                $this->db->query(
+                    "INSERT INTO inventory (product_id, stockIn, stockOut, updatedate)
+                     SELECT oi.product_id, oi.quantity, 0, NOW()
+                     FROM orderitems oi
+                     WHERE oi.order_id = :order_id",
+                    ['order_id' => $order['id']]
+                );
+
+                $this->db->query(
+                    "INSERT INTO notifications (user_id, message, notedate)
+                     VALUES (:user_id, CONCAT('Order #', :order_id, ' was canceled due to expiration.'), NOW())",
+                    [
+                        'user_id' => $order['user_id'],
+                        'order_id' => $order['id']
+                    ]
+                );
+
                 $canceledCount++;
             }
 
-            return $canceledCount; // Return the number of orders canceled
+            return $canceledCount;
         } catch (Exception $e) {
-            error_log("Error canceling expired pending orders: " . $e->getMessage());
+            error_log("Error canceling expired orders: " . $e->getMessage());
             throw $e;
         }
     }
+
+    // get locations 
+    public function getLocations() {
+        $sql = "SELECT id, location_name FROM locations";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // update order
+    public function getProductById($productId) {
+        try {
+            $result = $this->db->query(
+                "SELECT id, productname, price, stockquantity FROM products WHERE id = :id",
+                ['id' => $productId]
+            );
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Error fetching product by ID: " . $e->getMessage());
+            throw $e;
+        }
+    }
+    
+    public function updateProductStock($productId, $newStock) {
+        try {
+            $this->db->query(
+                "UPDATE products SET stockquantity = :stockquantity WHERE id = :id",
+                [
+                    'stockquantity' => $newStock,
+                    'id' => $productId
+                ]
+            );
+            return true;
+        } catch (Exception $e) {
+            error_log("Error updating product stock: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    // for chat
+    public function saveMessage($orderId, $senderId, $receiverId, $message) {
+        try {
+            $params = [
+                'sender_id' => $senderId,
+                'receiver_id' => $receiverId,
+                'message' => $message
+            ];
+            $sql = "INSERT INTO messages (order_id, sender_id, receiver_id, message, sent_at) 
+                    VALUES (:order_id, :sender_id, :receiver_id, :message, NOW())";
+            if ($orderId) {
+                $params['order_id'] = $orderId;
+            } else {
+                $sql = str_replace(':order_id', 'NULL', $sql);
+            }
+            $this->db->query($sql, $params);
+            return true;
+        } catch (Exception $e) {
+            error_log("Error saving message: " . $e->getMessage());
+            throw $e;
+        }
+    }
+    // get messages by
+    public function getMessagesByOrder($orderId, $userId) {
+        try {
+            $sql = "SELECT m.*, u1.username AS sender_name, u2.username AS receiver_name
+                    FROM messages m
+                    JOIN users u1 ON m.sender_id = u1.id
+                    JOIN users u2 ON m.receiver_id = u2.id
+                    WHERE m.order_id = :order_id 
+                    AND (m.sender_id = :user_id OR m.receiver_id = :user_id)
+                    ORDER BY m.sent_at ASC";
+            $params = [
+                'order_id' => $orderId,
+                'user_id' => $userId
+            ];
+            if (!$orderId) {
+                $sql = str_replace('m.order_id = :order_id', 'm.order_id IS NULL', $sql);
+                unset($params['order_id']);
+            }
+            $result = $this->db->query($sql, $params);
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Error fetching messages: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function getUserById($userId) {
+        try {
+            $sql = "SELECT role FROM users WHERE id = :id";
+            $params = ['id' => $userId];
+            $result = $this->db->query($sql, $params);
+            return $result->fetch() ?: null;
+        } catch (Exception $e) {
+            error_log("Error in getUserById: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    //get all admin
+    public function getAllAdmins() {
+        try {
+            $sql = "SELECT id FROM users WHERE role = 'admin' ORDER BY id";
+            return $this->db->query($sql)->fetchAll();
+        } catch (Exception $e) {
+            error_log("Error in getAllAdmins: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
 }
 ?>

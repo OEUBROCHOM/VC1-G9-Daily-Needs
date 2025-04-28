@@ -18,7 +18,6 @@ $closedOrders = $data['closedOrders'] ?? [];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* Sticky table header styles */
         .table-wrapper { position: relative; overflow: hidden; }
         .table-scroll { overflow-y: auto; max-height: 600px; }
         .table-scroll::-webkit-scrollbar { background: transparent; }
@@ -28,13 +27,10 @@ $closedOrders = $data['closedOrders'] ?? [];
         .table-custom tbody tr:hover { background-color: #f8f9fa; }
         .table-custom td { padding: 12px; vertical-align: middle; border-top: 1px solid #e9ecef; }
         .status-badge { padding: 0.4em 0.8em; border-radius: 12px; font-size: 0.9rem; font-weight: 500; }
-
-        /* Modal styles */
         .modal { display: none; position: fixed; z-index: 50; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; }
-        .modal-content { background-color: white; padding: 20px; border-radius: 10px; width: 90%; max-width: 400px; position: relative; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
+        .modal-content { background-color: white; padding: 20px; border-radius: 10px; width: 90%; max-width: 500px; position: relative; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
         .modal-close { position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer; color: #333; }
         .modal-content img { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; }
-
         .status-draft { color: #6B7280; }
         .status-pending { color: #D97706; }
         .status-ordered { color: #2563EB; }
@@ -43,6 +39,28 @@ $closedOrders = $data['closedOrders'] ?? [];
         .status-delivered { color: #16A34A; }
         .status-closed { color: #6B7280; }
         .status-canceled { color: #DC2626; }
+        .status-returned { color: #9333EA; }
+        /* Chat message styling */
+        .chat-message {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .chat-message.admin {
+            background-color: #e6f3ff;
+            text-align: right;
+            margin-left: 20%;
+        }
+        .chat-message.customer {
+            background-color: #f0f0f0;
+            text-align: left;
+            margin-right: 20%;
+        }
+        .chat-message small {
+            color: #6c757d;
+            font-size: 12px;
+        }
     </style>
 </head>
 
@@ -61,38 +79,37 @@ $closedOrders = $data['closedOrders'] ?? [];
                             <p class="text-gray-200 text-sm mt-1 italic">Track and manage your ShopZen inventory with ease.</p>
                         </div>
                     </div>
-                    <button class="px-5 py-2 bg-teal-600 text-white rounded-full hover:bg-teal-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center">
-                        <i class="fas fa-plus mr-2"></i> Create Purchase Order
-                    </button>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="exportToCSV()" class="px-5 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center">
+                            <i class="fas fa-download mr-2"></i> Export Orders
+                        </button>
+                        <a href="/create_order" class="px-5 py-2 bg-teal-600 text-white rounded-full hover:bg-teal-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center">
+                            <i class="fas fa-plus mr-2"></i> Create Purchase Order
+                        </a>
+                    </div>
                 </div>
             </div>
-
-            <!-- Tabs -->
-            <div class="p-4 bg-[#2C4A6B] border-b border-gray-200 shadow-sm">
-                <ul class="flex space-x-2 max-w-full justify-center">
-                    <li><button class="tab-btn active px-5 py-2 bg-white text-teal-600 border-t-2 border-teal-500 font-semibold text-sm uppercase tracking-wide rounded-t-md shadow-md hover:bg-teal-100 hover:text-teal-700 transition-all duration-300" data-tab="all">All</button></li>
-                    <li><button class="tab-btn px-5 py-2 bg-white text-gray-600 font-semibold text-sm uppercase tracking-wide rounded-t-md shadow-sm hover:bg-teal-100 hover:text-teal-700 transition-all duration-300" data-tab="draft">Draft</button></li>
-                    <li><button class="tab-btn px-5 py-2 bg-white text-gray-600 font-semibold text-sm uppercase tracking-wide rounded-t-md shadow-sm hover:bg-teal-100 hover:text-teal-700 transition-all duration-300" data-tab="ordered">Ordered</button></li>
-                    <li><button class="tab-btn px-5 py-2 bg-white text-gray-600 font-semibold text-sm uppercase tracking-wide rounded-t-md shadow-sm hover:bg-teal-100 hover:text-teal-700 transition-all duration-300" data-tab="partial">Partial</button></li>
-                    <li><button class="tab-btn px-5 py-2 bg-white text-gray-600 font-semibold text-sm uppercase tracking-wide rounded-t-md shadow-sm hover:bg-teal-100 hover:text-teal-700 transition-all duration-300" data-tab="received">Received</button></li>
-                    <li><button class="tab-btn px-5 py-2 bg-white text-gray-600 font-semibold text-sm uppercase tracking-wide rounded-t-md shadow-sm hover:bg-teal-100 hover:text-teal-700 transition-all duration-300" data-tab="closed">Closed</button></li>
-                </ul>
-            </div>
-
+    
             <!-- Search and Filter -->
             <div class="p-4 flex justify-between items-center">
                 <div class="flex items-center space-x-2">
-                    <input type="checkbox" class="h-5 w-5 text-teal-600">
                     <div class="relative">
                         <input type="text" id="search" placeholder="Search orders..." class="pl-10 pr-4 py-2 rounded-lg bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-300">
                         <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
                     </div>
+                    <div class="flex items-center space-x-2">
+                        <input type="date" id="startDate" class="px-3 py-2 rounded-lg bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-300">
+                        <span class="text-gray-600">to</span>
+                        <input type="date" id="endDate" class="px-3 py-2 rounded-lg bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-300">
+                        <button onclick="filterByDate()" class="px-3 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700"><i class="fas fa-filter"></i></button>
+                    </div>
                 </div>
                 <div class="flex items-center space-x-2">
+                    <button onclick="bulkCancelOrders()" class="px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled id="bulkCancelBtn"><i class="fas fa-ban mr-1"></i> Cancel Selected</button>
+                    <button onclick="bulkDeleteOrders()" class="px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled id="bulkDeleteBtn"><i class="fas fa-trash mr-1"></i> Delete Selected</button>
                     <button class="px-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200"><i class="fas fa-chevron-left"></i></button>
                     <span class="text-gray-600">1/1</span>
                     <button class="px-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200"><i class="fas fa-chevron-right"></i></button>
-                    <button class="px-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200"><i class="fas fa-ellipsis-v"></i></button>
                 </div>
             </div>
 
@@ -179,6 +196,7 @@ $closedOrders = $data['closedOrders'] ?? [];
                         <option value="Pending">Pending</option>
                         <option value="Delivered">Delivered</option>
                         <option value="Canceled">Canceled</option>
+                        <option value="Returned">Returned</option>
                     </select>
                 </div>
                 <button type="submit" class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">Save Changes</button>
@@ -186,22 +204,58 @@ $closedOrders = $data['closedOrders'] ?? [];
         </div>
     </div>
 
+    <!-- For chat message to support customer -->
     <div id="messageModal" class="modal">
         <div class="modal-content">
             <span class="modal-close">×</span>
-            <h2 class="text-xl font-bold mb-4">Send Message</h2>
+            <h2 class="text-xl font-bold mb-4">Reply to Customer</h2>
+            <div id="chatHistory" class="mb-4 max-h-60 overflow-y-auto border border-gray-300 rounded-lg p-3 bg-gray-50 text-sm">
+                <!-- Chat messages will be dynamically added here -->
+            </div>
             <form id="sendMessageForm">
                 <input type="hidden" id="messageOrderId" name="orderId">
                 <div class="mb-4">
-                    <label for="messageContent" class="block text-gray-600 text-sm mb-2">Message</label>
-                    <textarea id="messageContent" name="messageContent" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-teal-300" rows="4" placeholder="Type your message here..."></textarea>
+                    <label for="messageContent" class="block text-gray-600 text-sm mb-2">Your Message</label>
+                    <textarea id="messageContent" name="messageContent" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-teal-300" rows="3" placeholder="Type your reply to the customer..."></textarea>
                 </div>
-                <button type="submit" class="w-full bg-purple-500 text-white py-2 rounded-lg hover:bg-purple-600 transition">Send Message</button>
+                <button type="submit" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition">Send Reply</button>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="returnModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">×</span>
+            <h2 class="text-xl font-bold mb-4">Review Return Request</h2>
+            <form id="returnForm" action="/process_return" method="POST">
+                <input type="hidden" id="returnOrderId" name="orderId">
+                <div class="mb-4">
+                    <label class="block text-gray-600 text-sm mb-2">Return Details</label>
+                    <p id="returnDetails" class="text-sm text-gray-700"></p>
+                </div>
+                <div class="mb-4">
+                    <label for="returnAction" class="block text-gray-600 text-sm mb-2">Action</label>
+                    <select id="returnAction" name="returnAction" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-teal-300">
+                        <option value="Approve">Approve</option>
+                        <option value="Reject">Reject</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="returnType" class="block text-gray-600 text-sm mb-2">Return Type</label>
+                    <select id="returnType" name="returnType" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-teal-300" disabled>
+                        <option value="Refund">Refund</option>
+                        <option value="Replacement">Replacement</option>
+                        <option value="Store Credit">Store Credit</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">Process Return</button>
             </form>
         </div>
     </div>
 
     <script>
+        // Existing tab switching
         const tabButtons = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
 
@@ -216,9 +270,11 @@ $closedOrders = $data['closedOrders'] ?? [];
 
                 tabContents.forEach(content => content.classList.add('hidden'));
                 document.getElementById(button.getAttribute('data-tab')).classList.remove('hidden');
+                updateSelectAllState();
             });
         });
 
+        // Existing search functionality
         document.getElementById("search").addEventListener("input", function() {
             let filter = this.value.toLowerCase();
             let rows = document.querySelectorAll(".tab-content:not(.hidden) tbody tr");
@@ -228,6 +284,160 @@ $closedOrders = $data['closedOrders'] ?? [];
             });
         });
 
+        // Bulk action select all
+        const selectAllCheckbox = document.getElementById('selectAll');
+        selectAllCheckbox.addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('.tab-content:not(.hidden) tbody input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+            toggleBulkButtons();
+        });
+
+        // Individual checkbox listener
+        document.querySelectorAll('.tab-content tbody input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                updateSelectAllState();
+                toggleBulkButtons();
+            });
+        });
+
+        // for select
+        function updateSelectAllState() {
+            const checkboxes = document.querySelectorAll('.tab-content:not(.hidden) tbody input[type="checkbox"]');
+            const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+            selectAllCheckbox.checked = checkedCount === checkboxes.length && checkboxes.length > 0;
+            selectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
+        }
+
+        // for button toggle
+        function toggleBulkButtons() {
+            const checkboxes = document.querySelectorAll('.tab-content:not(.hidden) tbody input[type="checkbox"]');
+            const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const bulkCancelBtn = document.getElementById('bulkCancelBtn');
+            const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+            bulkCancelBtn.disabled = checkedCount === 0;
+            bulkDeleteBtn.disabled = checkedCount === 0;
+        }
+
+        // for canceled order
+        function bulkCancelOrders() {
+            if (!confirm('Are you sure you want to cancel the selected orders?')) return;
+            const checkboxes = document.querySelectorAll('.tab-content:not(.hidden) tbody input[type="checkbox"]:checked');
+            const orderIds = Array.from(checkboxes).map(cb => cb.closest('tr').dataset.orderId);
+            if (orderIds.length === 0) {
+                alert('No orders selected.');
+                return;
+            }
+
+            fetch('/bulk_cancel_orders', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `orderIds=${encodeURIComponent(JSON.stringify(orderIds))}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`Successfully canceled ${data.canceledCount} order(s).`);
+                    location.reload();
+                } else {
+                    alert('Failed to cancel orders: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while canceling the orders.');
+            });
+        }
+
+        // for delete order
+        function bulkDeleteOrders() {
+            if (!confirm('Are you sure you want to delete the selected orders?')) return;
+            const checkboxes = document.querySelectorAll('.tab-content:not(.hidden) tbody input[type="checkbox"]:checked');
+            const orderIds = Array.from(checkboxes).map(cb => cb.closest('tr').dataset.orderId);
+            if (orderIds.length === 0) {
+                alert('No orders selected.');
+                return;
+            }
+
+            fetch('/bulk_delete_orders', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `orderIds=${encodeURIComponent(JSON.stringify(orderIds))}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`Successfully deleted ${data.deletedCount} order(s).`);
+                    location.reload();
+                } else {
+                    alert('Failed to delete orders: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while deleting the orders.');
+            });
+        }
+
+        // for filter by date
+        function filterByDate() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            if (!startDate || !endDate) {
+                alert('Please select both start and end dates.');
+                return;
+            }
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            if (start > end) {
+                alert('Start date must be before end date.');
+                return;
+            }
+            const rows = document.querySelectorAll('.tab-content:not(.hidden) tbody tr');
+            rows.forEach(row => {
+                const purchaseTime = row.cells[8].textContent;
+                const date = new Date(purchaseTime);
+                row.style.display = (date >= start && date <= end) ? '' : 'none';
+            });
+        }
+
+        // for export to csv
+        function exportToCSV() {
+            const rows = document.querySelectorAll('.tab-content:not(.hidden) tbody tr:not([style*="display: none"])');
+            if (rows.length === 0) {
+                alert('No orders to export.');
+                return;
+            }
+            const csv = [];
+            const headers = ['Order No.', 'Product Name', 'Customer', 'Destination', 'Status', 'Received', 'Total', 'Purchase Time', 'Expected Arrival'];
+            csv.push(headers.join(','));
+
+            rows.forEach(row => {
+                const cells = row.cells;
+                const rowData = [
+                    cells[1].textContent,
+                    cells[2].textContent,
+                    cells[3].querySelector('span').textContent,
+                    cells[4].textContent,
+                    cells[5].textContent,
+                    cells[6].textContent,
+                    cells[7].textContent.replace('$', ''),
+                    cells[8].textContent,
+                    cells[9].textContent
+                ].map(cell => `"${cell.replace(/"/g, '""')}"`);
+                csv.push(rowData.join(','));
+            });
+
+            const csvContent = csv.join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `orders_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+        }
+
+        // Existing dropdown toggle
         function toggleDropdown(id) {
             const dropdowns = document.querySelectorAll("[id^='dropdown-']");
             dropdowns.forEach(dropdown => {
@@ -246,6 +456,7 @@ $closedOrders = $data['closedOrders'] ?? [];
             });
         });
 
+        // Existing modal functions
         function showDetails(orderNo, productName, username, profile, destination, status, purchaseTime, expectedArrival, total) {
             const modal = document.getElementById("orderModal");
             const modalProfile = document.getElementById("modalProfile");
@@ -268,7 +479,7 @@ $closedOrders = $data['closedOrders'] ?? [];
             modalExpectedArrival.textContent = expectedArrival;
             modalTotal.textContent = `$ ${total}`;
 
-            modalStatus.classList.remove("status-draft", "status-pending", "status-ordered", "status-partial", "status-received", "status-delivered", "status-closed", "status-canceled");
+            modalStatus.classList.remove("status-draft", "status-pending", "status-ordered", "status-partial", "status-received", "status-delivered", "status-closed", "status-canceled", "status-returned");
             if (status.toLowerCase() === "draft") modalStatus.classList.add("status-draft");
             else if (status.toLowerCase() === "pending") modalStatus.classList.add("status-pending");
             else if (status.toLowerCase() === "ordered") modalStatus.classList.add("status-ordered");
@@ -277,6 +488,7 @@ $closedOrders = $data['closedOrders'] ?? [];
             else if (status.toLowerCase() === "delivered") modalStatus.classList.add("status-delivered");
             else if (status.toLowerCase() === "closed") modalStatus.classList.add("status-closed");
             else if (status.toLowerCase() === "canceled") modalStatus.classList.add("status-canceled");
+            else if (status.toLowerCase() === "returned") modalStatus.classList.add("status-returned");
 
             modal.style.display = "flex";
 
@@ -285,6 +497,69 @@ $closedOrders = $data['closedOrders'] ?? [];
             window.onclick = function(event) { if (event.target === modal) modal.style.display = "none"; };
         }
 
+        // for show message
+        function showMessage(id) {
+            const modal = document.getElementById('messageModal');
+            const orderIdInput = document.getElementById('messageOrderId');
+
+            orderIdInput.value = id;
+
+            modal.style.display = 'flex';
+            loadAdminChatHistory(id);
+
+            const closeBtn = document.querySelector('#messageModal .modal-close');
+            closeBtn.onclick = function() { modal.style.display = 'none'; };
+            window.onclick = function(event) { if (event.target === modal) modal.style.display = 'none'; };
+        }
+
+        function loadAdminChatHistory(orderId) {
+            fetch(`/get_messages?orderId=${orderId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const chatHistory = document.getElementById('chatHistory');
+                    chatHistory.innerHTML = '';
+                    if (data.success) {
+                        data.messages.forEach(msg => {
+                            const div = document.createElement('div');
+                            div.className = `chat-message ${msg.sender_id == <?php echo $_SESSION['user_id']; ?> ? 'admin' : 'customer'}`;
+                            div.innerHTML = `<strong>${msg.sender_name}:</strong> ${msg.message}<br><small>${new Date(msg.sent_at).toLocaleString()}</small>`;
+                            chatHistory.appendChild(div);
+                        });
+                        chatHistory.scrollTop = chatHistory.scrollHeight;
+                    } else {
+                        chatHistory.innerHTML = '<p>No messages yet.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    chatHistory.innerHTML = '<p>Error loading chat history.</p>';
+                });
+        }
+
+        document.getElementById('sendMessageForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const orderId = document.getElementById('messageOrderId').value;
+            fetch('/send_message', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('messageContent').value = '';
+                    loadAdminChatHistory(orderId);
+                } else {
+                    alert('Failed to send message: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error sending message.');
+            });
+        });
+
+        // for edit order
         function showEdit(id, orderstatus) {
             const modal = document.getElementById("editModal");
             const orderIdInput = document.getElementById("editOrderId");
@@ -300,6 +575,24 @@ $closedOrders = $data['closedOrders'] ?? [];
             window.onclick = function(event) { if (event.target === modal) modal.style.display = "none"; };
         }
 
+        function showReturn(id, returnDetails, returnType) {
+            const modal = document.getElementById("returnModal");
+            const orderIdInput = document.getElementById("returnOrderId");
+            const returnDetailsEl = document.getElementById("returnDetails");
+            const returnTypeSelect = document.getElementById("returnType");
+
+            orderIdInput.value = id;
+            returnDetailsEl.textContent = returnDetails;
+            returnTypeSelect.value = returnType;
+
+            modal.style.display = "flex";
+
+            const closeBtn = document.querySelector("#returnModal .modal-close");
+            closeBtn.onclick = function() { modal.style.display = "none"; };
+            window.onclick = function(event) { if (event.target === modal) modal.style.display = "none"; };
+        }
+
+        // Existing form submissions
         document.getElementById("editOrderForm").addEventListener("submit", function(event) {
             event.preventDefault();
             const orderId = document.getElementById("editOrderId").value;
@@ -326,49 +619,34 @@ $closedOrders = $data['closedOrders'] ?? [];
             });
         });
 
-        function showMessage(id) {
-            const modal = document.getElementById("messageModal");
-            const orderIdInput = document.getElementById("messageOrderId");
-
-            orderIdInput.value = id;
-            modal.style.display = "flex";
-
-            const closeBtn = document.querySelector("#messageModal .modal-close");
-            closeBtn.onclick = function() { modal.style.display = "none"; };
-            window.onclick = function(event) { if (event.target === modal) modal.style.display = "none"; };
-        }
-
-        document.getElementById("sendMessageForm").addEventListener("submit", function(event) {
+        document.getElementById("returnForm").addEventListener("submit", function(event) {
             event.preventDefault();
-            const orderId = document.getElementById("messageOrderId").value;
-            const messageContent = document.getElementById("messageContent").value;
+            const orderId = document.getElementById("returnOrderId").value;
+            const returnAction = document.getElementById("returnAction").value;
+            const returnType = document.getElementById("returnType").value;
 
-            if (!messageContent.trim()) {
-                alert("Please enter a message.");
-                return;
-            }
-
-            fetch("/send_message", {
+            fetch("/process_return", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: `orderId=${orderId}&messageContent=${encodeURIComponent(messageContent)}`
+                body: `orderId=${orderId}&returnAction=${returnAction}&returnType=${returnType}`
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert("Message sent successfully!");
-                    document.getElementById("messageModal").style.display = "none";
-                    document.getElementById("messageContent").value = "";
+                    alert("Return processed successfully!");
+                    document.getElementById("returnModal").style.display = "none";
+                    location.reload();
                 } else {
-                    alert("Failed to send message: " + data.message);
+                    alert("Failed to process return: " + data.message);
                 }
             })
             .catch(error => {
                 console.error("Error:", error);
-                alert("An error occurred while sending the message.");
+                alert("An error occurred while processing the return.");
             });
         });
 
+        // for delete order
         function deleteOrder(id) {
             if (confirm('Are you sure you want to delete this order?')) {
                 fetch("/delete_order", {
@@ -425,9 +703,10 @@ $closedOrders = $data['closedOrders'] ?? [];
             }
         }
 
-        // Log when the page loads to confirm auto-cancellation ran
         window.addEventListener('load', function() {
             console.log("Page loaded, expired pending orders have been checked and canceled if applicable.");
+            updateSelectAllState();
+            toggleBulkButtons();
         });
     </script>
 </body>
@@ -444,6 +723,7 @@ function renderOrderTable($orders, $tabPrefix) {
         'Delivered' => 'bg-green-200 text-green-800',
         'Closed' => 'bg-gray-400 text-gray-800',
         'Canceled' => 'bg-red-300 text-red-800',
+        'Returned' => 'bg-purple-200 text-purple-800',
     ];
     
     ob_start();
@@ -451,7 +731,7 @@ function renderOrderTable($orders, $tabPrefix) {
     <table class="table-custom">
         <thead>
             <tr>
-                <th class="py-3 px-2 w-8 text-left text-xs font-semibold uppercase tracking-wider"><input type="checkbox" class="h-4 w-4 text-teal-600"></th>
+                <th class="py-3 px-2 w-8 text-left text-xs font-semibold uppercase tracking-wider"><input type="checkbox" id="selectAll"  class="h-4 w-4 text-teal-600"></th>
                 <th class="py-3 px-2 w-20 text-left text-xs font-semibold uppercase tracking-wider">Order No.</th>
                 <th class="py-3 px-2 w-32 text-left text-xs font-semibold uppercase tracking-wider">Product Name</th>
                 <th class="py-3 px-2 w-36 text-left text-xs font-semibold uppercase tracking-wider">Customer</th>
@@ -481,11 +761,11 @@ function renderOrderTable($orders, $tabPrefix) {
                                 <span class="text-sm text-gray-800 font-medium truncate"><?php echo htmlspecialchars($order['username'] ?? 'Unknown User'); ?></span>
                             </div>
                         </td>
-                        <td class="py-3 px-2 w-24 whitespace-nowrap text-sm text-gray-700 truncate">Loc <?php echo htmlspecialchars($order['location_id'] ?? 'N/A'); ?></td>
+                        <td class="py-3 px-2 w-24 whitespace-nowrap text-sm text-gray-700 truncate"><?php echo htmlspecialchars($order['location_name'] ?? 'N/A'); ?></td>
                         <td class="py-3 px-2 w-20 whitespace-nowrap">
                             <?php $class = $statuses[$order['orderstatus']] ?? 'bg-gray-300 text-gray-900'; ?>
-                            <span class="status-cell inline-flex items-center px-3 py-1 rounded-full text-xs font-medium <?= $class ?>">
-                                <?= htmlspecialchars($order['orderstatus']) ?>
+                            <span class="status-cell inline-flex items-center px-3 py-1 rounded-full text-xs font-medium <?php echo $class; ?>">
+                                <?php echo htmlspecialchars($order['orderstatus']); ?>
                             </span>
                         </td>
                         <td class="py-3 px-2 w-20 whitespace-nowrap text-sm text-gray-600 truncate">N/A</td>
@@ -493,10 +773,10 @@ function renderOrderTable($orders, $tabPrefix) {
                         <td class="py-3 px-2 w-32 whitespace-nowrap text-sm text-gray-700 truncate"><?php echo htmlspecialchars(date('M d, Y H:i', strtotime($order['orderdate']))); ?></td>
                         <td class="py-3 px-2 w-28 whitespace-nowrap text-sm text-gray-700 truncate"><?php echo htmlspecialchars(date('M d, Y', strtotime($order['orderdate']))); ?></td>
                         <td class="py-3 px-2 w-16 whitespace-nowrap relative">
-                            <button class="text-gray-600 hover:text-teal-600 transition text-2xl p-2 rounded-full hover:bg-gray-100" onclick="toggleDropdown('dropdown-<?= $tabPrefix ?>-<?= $order['id'] ?>')">
+                            <button class="text-gray-600 hover:text-teal-600 transition text-2xl p-2 rounded-full hover:bg-gray-100" onclick="toggleDropdown('dropdown-<?php echo $tabPrefix; ?>-<?php echo $order['id']; ?>')">
                                 <i class="fas fa-ellipsis-v"></i>
                             </button>
-                            <div id="dropdown-<?= $tabPrefix ?>-<?= $order['id'] ?>" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl z-10 border border-gray-200">
+                            <div id="dropdown-<?php echo $tabPrefix; ?>-<?php echo $order['id']; ?>" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl z-10 border border-gray-200">
                                 <button onclick="showDetails('<?php echo $index + 1; ?>', '<?php echo htmlspecialchars($order['product_name'] ?? 'Unknown Product'); ?>', '<?php echo htmlspecialchars($order['username'] ?? 'Unknown User'); ?>', '<?php echo htmlspecialchars($order['user_profile'] ?? 'https://i.pravatar.cc/40'); ?>', 'Loc <?php echo htmlspecialchars($order['location_id'] ?? 'N/A'); ?>', '<?php echo htmlspecialchars($order['orderstatus']); ?>', '<?php echo htmlspecialchars(date('M d, Y H:i', strtotime($order['orderdate']))); ?>', '<?php echo htmlspecialchars(date('M d, Y', strtotime($order['orderdate']))); ?>', '<?php echo number_format($order['totalprice'], 2); ?>')"
                                     class="flex items-center px-4 py-3 text-sm text-blue-600 hover:bg-blue-50 transition-colors duration-200 w-full text-left">
                                     <i class="fas fa-eye mr-3 text-lg"></i> View
@@ -509,6 +789,12 @@ function renderOrderTable($orders, $tabPrefix) {
                                     class="flex items-center px-4 py-3 text-sm text-purple-600 hover:bg-purple-50 transition-colors duration-200 w-full text-left">
                                     <i class="fas fa-envelope mr-3 text-lg"></i> Message
                                 </button>
+                                <?php if ($order['orderstatus'] === 'Returned'): ?>
+                                    <button onclick="showReturn('<?php echo $order['id']; ?>', '<?php echo htmlspecialchars($order['return_details'] ?? 'No return details available'); ?>', '<?php echo htmlspecialchars($order['return_type'] ?? 'Refund'); ?>')"
+                                        class="flex items-center px-4 py-3 text-sm text-indigo-600 hover:bg-indigo-50 transition-colors duration-200 w-full text-left">
+                                        <i class="fas fa-undo mr-3 text-lg"></i> Review Return
+                                    </button>
+                                <?php endif; ?>
                                 <button onclick="cancelOrder('<?php echo $order['id']; ?>')"
                                     class="flex items-center px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200 w-full text-left">
                                     <i class="fas fa-ban mr-3 text-lg"></i> Cancel

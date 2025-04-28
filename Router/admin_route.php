@@ -24,6 +24,7 @@
     require_once "Controllers/admin/page/RegisterController.php";
     require_once "Controllers/admin/inventory/CartController.php";
     require_once "Controllers/admin/inventory/PaymentFrontController.php";
+    require_once "Controllers/admin/page/OrderHistory.php";
 
     $route = new Router();
     //home admin
@@ -123,6 +124,26 @@
     $route->get('/viewcart', [CartController::class, 'viewcart']);
     $route->get('/checkouts', [CartController::class, 'checkout']);
     $route->post('/cart/update', [CartController::class, 'update']);
+
+    // Order History for customer
+    $route->get('/order_h', [orderHistoryController::class, 'index']);
+    $route->post('/submit_return', [orderHistoryController::class, 'submitReturn']);
+    $route->post('/process_return', [orderHistoryController::class, 'processReturn']);
+    $route->post('/bulk_cancel_orders', [OrderController::class, 'bulkCancelOrders']);
+    $route->post('/bulk_delete_orders', [OrderController::class, 'bulkDeleteOrders']);
+    $route->post('/process_return', [OrderHistoryController::class, 'processChangeRequest']);
+    $route->post('/send_message', [OrderController::class, 'sendMessage']); // Assuming this exists
+    $route->get('/create_order', [OrderController::class, 'createOrder']); // Assuming this exists
+    $route->post('/create_order', [OrderController::class, 'createOrder']);
+    $route->get('/order_all', [OrderController::class, 'order_all']);
+    $route->post('/delete_order_from_history', [OrderController::class, 'deleteOrderFromHistory']);
+
+    // For chat control
+    $route->post('/send_message', [OrderController::class, 'sendMessage']);
+    $route->get('/get_messages', [OrderController::class, 'getMessages']);
+
+
+
     //payment
     $route->get('/confirmpayment', [payController::class, 'index']);
     $route->post('/confirm-payment', [payController::class, 'confirmPayment']);
