@@ -469,10 +469,7 @@ if (isset($_SESSION['user_id'])) :
         <div class="banner">
             <div class="banner-overlay"></div>
             <div class="banner-content">
-            <h1 style="color: white;">Discount up to 50% from Answear Club Original Goods</h1>
-
-                <p>PROMOCODE: 10030</p>
-                <a href="#" class="btn">Shop Now</a>
+            <h1 style="color: white;">STOCKS</h1>
             </div>
         </div>
 
@@ -528,7 +525,6 @@ if (isset($_SESSION['user_id'])) :
         <form method="GET" action="" class="scan-product">
             <input type="hidden" name="category" value="<?php echo $selected_category; ?>">
             <input type="text" name="barcode" placeholder="Scan Product Barcode..." value="<?php echo isset($_GET['barcode']) ? htmlspecialchars($_GET['barcode']) : ''; ?>">
-            <button type="submit" class="btn"><i class="bi bi-upc-scan me-1"></i> Scan</button>
         </form>
     </div>
 

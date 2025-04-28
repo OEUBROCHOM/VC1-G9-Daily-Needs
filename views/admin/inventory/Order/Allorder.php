@@ -75,8 +75,8 @@ $closedOrders = $data['closedOrders'] ?? [];
                             <i class="fas fa-shopping-cart text-white text-xl"></i>
                         </div>
                         <div>
-                            <h2 class="text-3xl font-extrabold text-white tracking-tight">Purchase Orders</h2>
-                            <p class="text-gray-200 text-sm mt-1 italic">Track and manage your ShopZen inventory with ease.</p>
+                            <h2 class="text-3xl font-extrabold text-white tracking-tight">All Orders</h2>
+                            <p class="text-gray-200 text-sm mt-1 italic">Track and manage all new order and other order from customers</p>
                         </div>
                     </div>
                     <div class="flex items-center space-x-2">
@@ -107,9 +107,6 @@ $closedOrders = $data['closedOrders'] ?? [];
                 <div class="flex items-center space-x-2">
                     <button onclick="bulkCancelOrders()" class="px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled id="bulkCancelBtn"><i class="fas fa-ban mr-1"></i> Cancel Selected</button>
                     <button onclick="bulkDeleteOrders()" class="px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled id="bulkDeleteBtn"><i class="fas fa-trash mr-1"></i> Delete Selected</button>
-                    <button class="px-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200"><i class="fas fa-chevron-left"></i></button>
-                    <span class="text-gray-600">1/1</span>
-                    <button class="px-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
 
@@ -732,12 +729,11 @@ function renderOrderTable($orders, $tabPrefix) {
         <thead>
             <tr>
                 <th class="py-3 px-2 w-8 text-left text-xs font-semibold uppercase tracking-wider"><input type="checkbox" id="selectAll"  class="h-4 w-4 text-teal-600"></th>
-                <th class="py-3 px-2 w-20 text-left text-xs font-semibold uppercase tracking-wider">Order No.</th>
+                <th class="py-3 px-2 w-20 text-left text-xs font-semibold uppercase tracking-wider">No.</th>
                 <th class="py-3 px-2 w-32 text-left text-xs font-semibold uppercase tracking-wider">Product Name</th>
                 <th class="py-3 px-2 w-36 text-left text-xs font-semibold uppercase tracking-wider">Customer</th>
                 <th class="py-3 px-2 w-24 text-left text-xs font-semibold uppercase tracking-wider">Destination</th>
                 <th class="py-3 px-2 w-20 text-left text-xs font-semibold uppercase tracking-wider">Status</th>
-                <th class="py-3 px-2 w-20 text-left text-xs font-semibold uppercase tracking-wider">Received</th>
                 <th class="py-3 px-2 w-20 text-left text-xs font-semibold uppercase tracking-wider">Total</th>
                 <th class="py-3 px-2 w-32 text-left text-xs font-semibold uppercase tracking-wider">Purchase Time</th>
                 <th class="py-3 px-2 w-28 text-left text-xs font-semibold uppercase tracking-wider">Expected Arrival</th>
@@ -768,7 +764,6 @@ function renderOrderTable($orders, $tabPrefix) {
                                 <?php echo htmlspecialchars($order['orderstatus']); ?>
                             </span>
                         </td>
-                        <td class="py-3 px-2 w-20 whitespace-nowrap text-sm text-gray-600 truncate">N/A</td>
                         <td class="py-3 px-2 w-20 whitespace-nowrap text-sm text-purple-600 font-semibold truncate">$<?php echo number_format($order['totalprice'], 2); ?></td>
                         <td class="py-3 px-2 w-32 whitespace-nowrap text-sm text-gray-700 truncate"><?php echo htmlspecialchars(date('M d, Y H:i', strtotime($order['orderdate']))); ?></td>
                         <td class="py-3 px-2 w-28 whitespace-nowrap text-sm text-gray-700 truncate"><?php echo htmlspecialchars(date('M d, Y', strtotime($order['orderdate']))); ?></td>

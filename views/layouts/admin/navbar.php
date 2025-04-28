@@ -74,7 +74,7 @@ try {
         </li>
 
         <li class="pc-item pc-caption"style="color:white;">
-          <label>UI Components</label>
+          <label>Components</label>
           <i class="ti ti-dashboard"></i>
         </li>
         <li class="pc-item pc-hasmenu ">
@@ -167,62 +167,6 @@ try {
             </ul>
         </li>
 
-        <li class="pc-item pc-caption"style="color:white;">
-          <label>Pages</label>
-          <i class="ti ti-news"></i>
-        </li>
-        <li class="pc-item"style="color:white;">
-          <a href="/admin-login" class="pc-link"style="color:white;">
-            <span class="pc-micon"><i class="ti ti-lock"></i></span>
-            <span class="pc-mtext">Login</span>
-          </a>
-        </li>
-        <li class="pc-item">
-          <a href="/register" class="pc-link"style="color:white;">
-            <span class="pc-micon"><i class="ti ti-user-plus"></i></span>
-            <span class="pc-mtext">Register</span>
-          </a>
-        </li>
-
-        <li class="pc-item pc-caption"style="color:white;">
-          <label>Other</label>
-          <i class="ti ti-brand-chrome"></i>
-        </li>
-        <li class="pc-item pc-hasmenu">
-          <a href="#!" class="pc-link"><span class="pc-micon"><i class="ti ti-menu"style="color:white;"></i></span><span class="pc-mtext"style="color:white;">Menu
-              levels</span><span class="pc-arrow"><i data-feather="chevron-right"style="color:white;"></i></span></a>
-          <ul class="pc-submenu">
-            <li class="pc-item"><a class="pc-link" href="#!"style="color:white;">Level 2.1</a></li>
-            <li class="pc-item pc-hasmenu">
-              <a href="#!" class="pc-link"style="color:white;">Level 2.2<span class="pc-arrow"style="color:white;"><i data-feather="chevron-right"style="color:white;"></i></span></a>
-              <ul class="pc-submenu">
-                <li class="pc-item"><a class="pc-link" href="#!"style="color:white;">Level 3.1</a></li>
-                <li class="pc-item"><a class="pc-link" href="#!"style="color:white;">Level 3.2</a></li>
-                <li class="pc-item pc-hasmenu">
-                  <a href="#!" class="pc-link"style="color:white;">Level 3.3<span class="pc-arrow"><i data-feather="chevron-right"style="color:white;"></i></span></a>
-                  <ul class="pc-submenu">
-                    <li class="pc-item"><a class="pc-link" href="#!"style="color:white;">Level 4.1</a></li>
-                    <li class="pc-item"><a class="pc-link" href="#!"style="color:white;">Level 4.2</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li class="pc-item pc-hasmenu"style="color:white;">
-              <a href="#!" class="pc-link"style="color:white;">Level 2.3<span class="pc-arrow"><i data-feather="chevron-right"style="color:white;"></i></span></a>
-              <ul class="pc-submenu">
-                <li class="pc-item"><a class="pc-link" href="#!"style="color:white;">Level 3.1</a></li>
-                <li class="pc-item"><a class="pc-link" href="#!"style="color:white;">Level 3.2</a></li>
-                <li class="pc-item pc-hasmenu">
-                  <a href="#!" class="pc-link"style="color:white;">Level 3.3<span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
-                  <ul class="pc-submenu">
-                    <li class="pc-item"><a class="pc-link" href="#!"style="color:white;">Level 4.1</a></li>
-                    <li class="pc-item"><a class="pc-link" href="#!"style="color:white;">Level 4.2</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
         <li class="pc-item">
           <a href="/somepage" class="pc-link">
             <span class="pc-micon"><i class="ti ti-brand-chrome"style="color:white;"></i></span>
@@ -277,138 +221,6 @@ try {
             <!-- [Mobile Media Block end] -->
             <div class="ms-auto">
                 <ul class="list-unstyled">
-                    <!-- <li class="dropdown pc-h-item pc-mega-menu">
-                        <a
-                            class="pc-head-link dropdown-toggle arrow-none me-0"
-                            data-bs-toggle="dropdown"
-                            href="#"
-                            role="button"
-                            aria-haspopup="false"
-                            aria-expanded="false"
-                        >
-                            <i class="ti ti-layout-grid"></i>
-                        </a>
-                        <div class="dropdown-menu pc-h-dropdown pc-mega-dmenu">
-                            <div class="row g-0">
-                                <div class="col image-block">
-                                    <h2 class="text-white">Explore Components</h2>
-                                    <p class="text-white my-4">Try our pre made component pages to check how it feels and suits as per your need.</p>
-                                    <div class="row align-items-end">
-                                        <div class="col-auto">
-                                            <div class="btn btn btn-light">View All <i class="ti ti-arrow-narrow-right"></i></div>
-                                        </div>
-                                        <div class="col">
-                                                <img src="../assets/images/mega-menu/chart.svg" alt="image" class="img-fluid img-charts">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <h6 class="mega-title">UI Components</h6>
-                                    <ul class="pc-mega-list">
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Alerts</a></li
-                                        >
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Accordions</a></li
-                                        >
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Avatars</a></li
-                                        >
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Badges</a></li
-                                        >
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Breadcrumbs</a></li
-                                        >
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Button</a></li
-                                        >
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Buttons Groups</a></li
-                                        >
-                                    </ul>
-                                </div>
-                                <div class="col">
-                                    <h6 class="mega-title">UI Components</h6>
-                                    <ul class="pc-mega-list">
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Menus</a></li
-                                        >
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Media Sliders / Carousel</a></li
-                                        >
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Modals</a></li
-                                        >
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Pagination</a></li
-                                        >
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Progress Bars &amp; Graphs</a></li
-                                        >
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Search Bar</a></li
-                                        >
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Tabs</a></li
-                                        >
-                                    </ul>
-                                </div>
-                                <div class="col">
-                                    <h6 class="mega-title">Advance Components</h6>
-                                    <ul class="pc-mega-list">
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Advanced Stats</a></li
-                                        >
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Advanced Cards</a></li
-                                        >
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Lightbox</a></li
-                                        >
-                                        <li
-                                            ><a href="#!" class="dropdown-item"><i class="ti ti-circle"></i> Notification</a></li
-                                        >
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </li> -->
-                    <!-- <li class="dropdown pc-h-item">
-                        <a
-                            class="pc-head-link dropdown-toggle arrow-none me-0"
-                            data-bs-toggle="dropdown"
-                            href="#"
-                            role="button"
-                            aria-haspopup="false"
-                            aria-expanded="false"
-                        >
-                            <i class="ti ti-language"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end pc-h-dropdown">
-                            <a href="#!" class="dropdown-item">
-                                <i class="ti ti-user"></i>
-                                <span>My Account</span>
-                            </a>
-                            <a href="#!" class="dropdown-item">
-                                <i class="ti ti-settings"></i>
-                                <span>Settings</span>
-                            </a>
-                            <a href="#!" class="dropdown-item">
-                                <i class="ti ti-headset"></i>
-                                <span>Support</span>
-                            </a>
-                            <a href="#!" class="dropdown-item">
-                                <i class="ti ti-lock"></i>
-                                <span>Lock Screen</span>
-                            </a>
-                            <a href="#!" class="dropdown-item">
-                                <i class="ti ti-power"></i>
-                                <span>Logout</span>
-                            </a>
-                        </div>
-                    </li> -->
-            <!-- Notification Dropdown -->
             <li class="dropdown pc-h-item">
                 <a
                     class="pc-head-link dropdown-toggle arrow-none me-0"
@@ -496,11 +308,6 @@ try {
             </script>
 
 <!-- Add some basic CSS -->
-                    <!-- <li class="dropdown pc-h-item">
-                        <a class="pc-head-link me-0" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_pc_layout">
-                            <i class="ti ti-settings"></i>
-                        </a>
-                    </li> -->
                     <li class="dropdown pc-h-item header-user-profile ">
                         <a
                             class="pc-head-link dropdown-toggle arrow-none me-0"

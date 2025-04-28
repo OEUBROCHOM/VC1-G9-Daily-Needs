@@ -185,7 +185,7 @@ try {
                             <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Phone</th>
                             <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Customer</th>
                             <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Payment</th>
-                            <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Time</th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Date & Time</th>
                             <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Status</th>
                             <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Total</th>
                             <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Action</th>

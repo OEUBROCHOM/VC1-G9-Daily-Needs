@@ -225,56 +225,6 @@ try {
         <div class="bg-white rounded-lg p-6 shadow border border-[#2C4A6B]">
             <h4 class="mb-4 font-semibold text-[#2C4A6B] text-xl">Order History</h4>
 
-            <ul class="flex flex-wrap -mb-px" id="orderTabs" role="tablist">
-                <li class="mr-1" role="presentation">
-                    <a class="inline-flex items-center justify-center p-3 px-4 text-sm font-medium rounded-t-lg transition-all duration-300 ease-in-out
-            <?php echo $currentTab === 'all' ?
-                'bg-[#2C4A6B] text-white shadow-md' :
-                'text-gray-500 hover:text-[#2C4A6B] hover:bg-gray-100 border-b-2 border-transparent hover:border-[#2C4A6B]'; ?>"
-                        href="?tab=all&start_date=<?php echo $startDate; ?>&end_date=<?php echo $endDate; ?>"
-                        role="tab">
-                        <i class="fas fa-list-alt mr-2"></i> All Orders
-                    </a>
-                </li>
-                <li class="mr-1" role="presentation">
-                    <a class="inline-flex items-center justify-center p-3 px-4 text-sm font-medium rounded-t-lg transition-all duration-300 ease-in-out
-            <?php echo $currentTab === 'summary' ?
-                'bg-[#2C4A6B] text-white shadow-md' :
-                'text-gray-500 hover:text-[#2C4A6B] hover:bg-gray-100 border-b-2 border-transparent hover:border-[#2C4A6B]'; ?>"
-                        href="?tab=summary&start_date=<?php echo $startDate; ?>&end_date=<?php echo $endDate; ?>"
-                        role="tab">
-                        <i class="fas fa-chart-pie mr-2"></i> Summary
-                    </a>
-                </li>
-                <li class="mr-1" role="presentation">
-                    <a class="inline-flex items-center justify-center p-3 px-4 text-sm font-medium rounded-t-lg transition-all duration-300 ease-in-out
-            <?php echo $currentTab === 'completed' ?
-                'bg-[#2C4A6B] text-white shadow-md' :
-                'text-gray-500 hover:text-[#2C4A6B] hover:bg-gray-100 border-b-2 border-transparent hover:border-[#2C4A6B]'; ?>"
-                        href="?tab=completed&start_date=<?php echo $startDate; ?>&end_date=<?php echo $endDate; ?>"
-                        role="tab">
-                        <i class="fas fa-check-circle mr-2"></i> Completed
-                    </a>
-                </li>
-                <li class="mr-1" role="presentation">
-                    <a class="inline-flex items-center justify-center p-3 px-4 text-sm font-medium rounded-t-lg transition-all duration-300 ease-in-out
-            <?php echo $currentTab === 'completed' ?
-                'bg-[#2C4A6B] text-white shadow-md' :
-                'text-gray-500 hover:text-[#2C4A6B] hover:bg-gray-100 border-b-2 border-transparent hover:border-[#2C4A6B]'; ?>"
-                        href="?tab=cancelled&start_date=<?php echo $startDate; ?>&end_date=<?php echo $endDate; ?>"
-                        role="tab">
-                        <i class="fas fa-times-circle mr-2"></i> Cancelled
-                    </a>
-                </li>
-            </ul>
-
-            <form class="flex justify-end mb-4 mt-4" method="GET">
-                <input type="hidden" name="tab" value="<?php echo $currentTab; ?>">
-                <input type="date" name="start_date" class="border border-[#2C4A6B] rounded px-3 py-1.5 mr-2 w-auto text-base" value="<?php echo $startDate; ?>">
-                <input type="date" name="end_date" class="border border-[#2C4A6B] rounded px-3 py-1.5 mr-2 w-auto text-base" value="<?php echo $endDate; ?>">
-                <button type="submit" class="bg-[#2C4A6B] text-white px-4 py-1.5 rounded hover:bg-[#1E3550] transition-colors border border-[#2C4A6B] text-base">Filter</button>
-            </form>
-
             <div class="tab-content" id="orderTabsContent">
                 <div class="<?php echo $currentTab === 'all' ? 'block' : 'hidden'; ?>" id="all" role="tabpanel">
                     <div class="table-container">
@@ -285,7 +235,6 @@ try {
                                     <th class="p-3 text-left">Name</th>
                                     <th class="p-3 text-left">Payment</th>
                                     <th class="p-3 text-left">Date & Time</th>
-                                    <th class="p-3 text-left">Type</th>
                                     <th class="p-3 text-left">Status</th>
                                     <th class="p-3 text-left">Total</th>
                                     <th class="p-3 text-left">Action</th>
@@ -307,7 +256,6 @@ try {
                                         </td>
                                         <td class="p-3 text-green-600 font-medium"><?php echo htmlspecialchars($order['payments'] ?? 'N/A'); ?></td>
                                         <td class="p-3"><?php echo htmlspecialchars(date('M j, Y H:i', strtotime($order['orderdate']))); ?></td>
-                                        <td class="p-3"><?php echo htmlspecialchars($order['ordertype'] ?? 'N/A'); ?></td>
                                         <td class="p-3">
                                             <span id="status-<?php echo $order['id']; ?>" class="status-cell status-badge rounded-full font-medium <?php
                                                 if ($order['orderstatus'] === 'Pending') {

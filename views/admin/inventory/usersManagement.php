@@ -7,17 +7,17 @@ if (session_status() == PHP_SESSION_NONE) {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <div class="header d-flex justify-content-between align-items-center flex-wrap gap-2">
-        <h1 class="text-center mb-4">Welcome to User Management</h1>
+        <h1 class="text-center mb-4">USER MANAGEMENT</h1>
         <div class="col-md-4 col-lg-3 search-bar">
             <input type="text" class="form-control rounded-pill" placeholder="Search users" id="recycleSearchInput">
         </div>
     </div>
 
     <div class="container mt-5">
+        <h2>Admin</h2>
         <table class="table table-bordered table-striped table-hover" style="border-radius: 15px; overflow: y;">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col" style="border-top-left-radius: 1px;">Select</th>
                     <th scope="col">Profile</th>
                     <th scope="col">Username</th>
                     <th scope="col">Email</th>
@@ -28,37 +28,83 @@ if (session_status() == PHP_SESSION_NONE) {
             </thead>
             <tbody id="userTableBody">
                 <?php foreach ($users as $user): ?>
-                    <tr>
-                        <td class="text-center">
-                            <input type="checkbox" name="selectedRow" id="row<?= htmlspecialchars($user['id']) ?>" >
-                        </td>
-                        <td class="text-center">
-                            <img src="<?= $user['profile'] ?>" alt="Profile Image" width="50" height="50" class="rounded-circle">
-                        </td>
-                        <td><?= htmlspecialchars($user['username']) ?></td>
-                        <td><?= htmlspecialchars($user['email']) ?></td>
-                        <td><?= htmlspecialchars($user['phone']) ?></td>
-                        <td>
-                            <span class="badge text-white px-3 py-1" style="border-radius: 20px; font-size: 12px; background-color: 
-                                <?php echo ($user['role'] == 'Admin') ? '#dc3545' : 
-                                (($user['role'] == 'User') ? '#ffc107' : '#28a745'); ?>;">
-                                <?= htmlspecialchars($user['role']) ?>
-                            </span>
-                        </td>
-                        <td style="text-align: center; vertical-align: middle;">
-                            <div class="dropdown">
-                                <button class="btn btn-light border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background: none;">
-                                    <i class="material-icons">more_vert</i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="/users/edit/<?= $user['id'] ?>">
-                                        <i class="material-icons">edit</i> Edit</a></li>
-                                    <li><a class="dropdown-item text-danger delete-user" href="#" data-id="<?= $user['id'] ?>">
-                                        <i class="material-icons">delete</i> Delete</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+                    <?php if($user['role']==='admin') :?>
+                        <tr>
+                            <td class="text-center">
+                                <img src="<?= $user['profile'] ?>" alt="Profile Image" width="50" height="50" class="rounded-circle">
+                            </td>
+                            <td><?= htmlspecialchars($user['username']) ?></td>
+                            <td><?= htmlspecialchars($user['email']) ?></td>
+                            <td><?= htmlspecialchars($user['phone']) ?></td>
+                            <td>
+                                <span class="badge text-white px-3 py-1" style="border-radius: 20px; font-size: 12px; background-color: 
+                                    <?php echo ($user['role'] == 'Admin') ? '#dc3545' : 
+                                    (($user['role'] == 'User') ? '#ffc107' : '#28a745'); ?>;">
+                                    <?= htmlspecialchars($user['role']) ?>
+                                </span>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle;">
+                                <div class="dropdown">
+                                    <button class="btn btn-light border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background: none;">
+                                        <i class="material-icons">more_vert</i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/users/edit/<?= $user['id'] ?>">
+                                            <i class="material-icons">edit</i> Edit</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endif;?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <!-- For customers -->
+        <h2 style="margin-top: 100px;">Customers</h2>
+        <table class="table table-bordered table-striped table-hover" style="border-radius: 15px; overflow: y; margin-top: 20px;">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Profile</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Role</th>
+                    <th style="text-align:center; border-top-right-radius: 1px;" scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody">
+                <?php foreach ($users as $user): ?>
+                    <?php if($user['role']==='users') :?>
+                        <tr>
+                            <td class="text-center">
+                                <img src="<?= $user['profile'] ?>" alt="Profile Image" width="50" height="50" class="rounded-circle">
+                            </td>
+                            <td><?= htmlspecialchars($user['username']) ?></td>
+                            <td><?= htmlspecialchars($user['email']) ?></td>
+                            <td><?= htmlspecialchars($user['phone']) ?></td>
+                            <td>
+                                <span class="badge text-white px-3 py-1" style="border-radius: 20px; font-size: 12px; background-color: 
+                                    <?php echo ($user['role'] == 'Admin') ? '#dc3545' : 
+                                    (($user['role'] == 'User') ? '#ffc107' : '#28a745'); ?>;">
+                                    <?= htmlspecialchars($user['role']) ?>
+                                </span>
+                            </td>
+                            <td style="text-align: center; vertical-align: middle;">
+                                <div class="dropdown">
+                                    <button class="btn btn-light border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background: none;">
+                                        <i class="material-icons">more_vert</i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/users/edit/<?= $user['id'] ?>">
+                                            <i class="material-icons">edit</i> Edit</a></li>
+                                        <li><a class="dropdown-item text-danger delete-user" href="#" data-id="<?= $user['id'] ?>">
+                                            <i class="material-icons">delete</i> Delete</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endif;?>
                 <?php endforeach; ?>
             </tbody>
         </table>

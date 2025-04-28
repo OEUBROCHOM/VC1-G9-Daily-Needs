@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
 ?>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <div class="header d-flex justify-content-between align-items-center flex-wrap gap-2">
-    <h1 class="text-center mb-4">Users</h1>
+    <h1 class="text-center mb-4">USERS STATUS</h1>
     <div class="col-md-4 col-lg-3 search-bar">
         <input type="text" class="form-control rounded-pill" placeholder="Search users" id="recycleSearchInput">
     </div>
@@ -62,8 +62,10 @@ if (!isset($_SESSION['user_id'])) {
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="/users/edit/<?= $user['id'] ?>">
                                         <i class="material-icons">edit</i> Edit</a></li>
-                                    <li><a class="dropdown-item text-danger delete-user" href="#" data-id="<?= $user['id'] ?>">
-                                        <i class="material-icons">delete</i> Delete</a></li>
+                                    <?php if ($user['role'] !== 'admin') : ?>
+                                        <li><a class="dropdown-item text-danger delete-user" href="#" data-id="<?= $user['id'] ?>">
+                                            <i class="material-icons">delete</i> Delete</a></li>
+                                    <?php endif; ?>
                                 </ul>
                             </div>
                     </td>
