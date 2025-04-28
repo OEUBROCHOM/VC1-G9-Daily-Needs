@@ -438,7 +438,7 @@ endif;
         <div class="content-section">
             <div class="text-content">
                 <h2>Why Milène Acne Clear facial foam?</h2>
-                <p>Formulated to help clear acne and prevent future breakoutsុំ​cleanse the skin without over-drying, suitable for daily use, contains salicylic acid or other acne-fighting ingredients to target blemishes effectively.</p>
+                <p>Formulated to help clear acne and prevent future breakouts cleanse the skin without over-drying, suitable for daily use, contains salicylic acid or other acne-fighting ingredients to target blemishes effectively.</p>
                 <a href="#" class="cta-button">Discover Our Story</a>
             </div>
             <div class="image-content-right">
@@ -546,9 +546,6 @@ endif;
                         </div>
                         <div class="modal-body">
                             <p id="modal-description"></p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
