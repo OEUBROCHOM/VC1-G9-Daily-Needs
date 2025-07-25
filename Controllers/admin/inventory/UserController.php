@@ -1,11 +1,14 @@
 <?php
     require_once 'Models/UserModel.php';
+    require_once 'Models/OrderModel.php';
     class UserController extends BaseadminController {
         private $users;
+        private $orders;
 
         // Constructor to start the session and initialize the user model
         public function __construct(){
             $this->users = new UserModel();
+            $this->orders = new OrderModel();
         }
 
         // Get all users from the database

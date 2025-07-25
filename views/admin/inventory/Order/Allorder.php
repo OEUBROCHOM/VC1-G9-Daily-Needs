@@ -61,6 +61,27 @@ $closedOrders = $data['closedOrders'] ?? [];
             color: #6c757d;
             font-size: 12px;
         }
+
+        .chat-message {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .chat-message.admin {
+            background-color: #e6f3ff;
+            text-align: right;
+            margin-left: 20%;
+        }
+        .chat-message.customer {
+            background-color: #f0f0f0;
+            text-align: left;
+            margin-right: 20%;
+        }
+        .chat-message small {
+            color: #6c757d;
+            font-size: 12px;
+        }
     </style>
 </head>
 
@@ -83,9 +104,6 @@ $closedOrders = $data['closedOrders'] ?? [];
                         <button onclick="exportToCSV()" class="px-5 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center">
                             <i class="fas fa-download mr-2"></i> Export Orders
                         </button>
-                        <a href="/create_order" class="px-5 py-2 bg-teal-600 text-white rounded-full hover:bg-teal-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center">
-                            <i class="fas fa-plus mr-2"></i> Create Purchase Order
-                        </a>
                     </div>
                 </div>
             </div>
@@ -207,7 +225,13 @@ $closedOrders = $data['closedOrders'] ?? [];
             <span class="modal-close">×</span>
             <h2 class="text-xl font-bold mb-4">Reply to Customer</h2>
             <div id="chatHistory" class="mb-4 max-h-60 overflow-y-auto border border-gray-300 rounded-lg p-3 bg-gray-50 text-sm">
-                <!-- Chat messages will be dynamically added here -->
+                <div class="chat-message admin">
+                    <strong>You:</strong> He creates an atmosphere of mystery 😄<br><small>11:36 AM</small>
+                </div>
+                <div class="chat-message customer">
+                    <strong>Evan Scott:</strong> Robert, don't be like that and say something more 😃<br><small>11:44 AM</small>
+                </div>
+                <!-- Additional messages will be dynamically added here -->
             </div>
             <form id="sendMessageForm">
                 <input type="hidden" id="messageOrderId" name="orderId">

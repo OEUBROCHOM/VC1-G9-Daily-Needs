@@ -144,7 +144,8 @@ $applied_coupon = isset($_SESSION['applied_coupon']) ? $_SESSION['applied_coupon
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     font-size: 1.1rem;
-    fontව
+    /* Removed invalid line 'fontව' */
+}
 
 .nav.drp-tabs.nav-fill .nav-item {
     margin: 0 10px;

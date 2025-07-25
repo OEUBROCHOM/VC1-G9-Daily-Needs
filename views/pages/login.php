@@ -36,10 +36,10 @@
       border-radius: 8px;
       padding: 30px;
       text-align: center;
-      background: rgba(54, 43, 43, 0.1);
+      background: rgba(41, 153, 0, 0.8);
       backdrop-filter: blur(8px);
       color: #fff;
-      border: 2px solid rgba(255, 255, 255, 0.5);
+      border: 2px solid rgba(89, 0, 255, 0.5);
       backdrop-filter: blur(8px);
       margin-right: 90px;
     }
@@ -160,7 +160,7 @@
   
     <div class="wrapper">
       <form action="/authenticate" method="POST">
-        <h2>User Login</h2>
+        <h2>Fill your info</h2>
         <div class="input-field">
           <input type="email" name="email" required>
           <label>Enter your email</label>

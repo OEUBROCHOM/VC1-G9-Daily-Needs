@@ -8,7 +8,7 @@ $dbname = "dailyneed_db";
 // Handle AJAX requests
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
     try {
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $conn = new PDO("mysql:host=$servername;port=4306;dbname=$dbname", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Handle delete request
@@ -40,7 +40,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 }
 
 try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn = new PDO("mysql:host=$servername;port=4306;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Pagination settings
@@ -246,10 +246,10 @@ try {
                                                 class="flex items-center px-4 py-3 text-sm text-red-600 hover:bg-red-50 w-full text-left">
                                                 <i class="fas fa-trash mr-3 text-lg"></i> Delete
                                             </button>
-                                            <button onclick="showMessage('<?php echo $order['id']; ?>')"
+                                            <!-- <button onclick="showMessage('<?php echo $order['id']; ?>')"
                                                 class="flex items-center px-4 py-3 text-sm text-purple-600 hover:bg-purple-50 w-full text-left">
                                                 <i class="fas fa-envelope mr-3 text-lg"></i> Message
-                                            </button>
+                                            </button> -->
                                         </div>
                                     </td>
                                 </tr>

@@ -346,79 +346,154 @@ class OrderController extends BaseadminController {
     }
 
     // for chat controller
+    // public function sendMessage() {
+    //     header('Content-Type: application/json; charset=UTF-8');
+    //     try {
+    //         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    //             echo json_encode(['success' => false, 'message' => 'Invalid request method']);
+    //             exit;
+    //         }
+
+    //         $orderId = $_POST['orderId'] ?? null;
+    //         $messageContent = $_POST['messageContent'] ?? null;
+    //         $senderId = $_SESSION['user_id'] ?? null;
+
+    //         if (!$senderId) {
+    //             echo json_encode(['success' => false, 'message' => 'User not authenticated']);
+    //             exit;
+    //         }
+    //         if (!$messageContent || trim($messageContent) === '') {
+    //             echo json_encode(['success' => false, 'message' => 'Message content is required']);
+    //             exit;
+    //         }
+    //         if ($orderId && (!is_numeric($orderId) || $orderId <= 0)) {
+    //             echo json_encode(['success' => false, 'message' => 'Invalid order ID']);
+    //             exit;
+    //         }
+
+    //         // Determine if sender is admin by querying the users table
+    //         $user = $this->orderModel->getUserById($senderId);
+    //         if (!$user || !isset($user['role'])) {
+    //             echo json_encode(['success' => false, 'message' => 'User role not found']);
+    //             exit;
+    //         }
+    //         $isAdmin = $user['role'] === 'admin';
+    //         error_log("Sender ID: $senderId, Is Admin: " . ($isAdmin ? 'true' : 'false') . ", Order ID: $orderId");
+
+    //         if ($isAdmin) {
+    //             // Admin to customer: Send one message to the customer
+    //             $order = $this->orderModel->getOrderById($orderId);
+    //             if (!$order || !isset($order[0]['user_id'])) {
+    //                 echo json_encode(['success' => false, 'message' => 'Customer not found for this order']);
+    //                 exit;
+    //             }
+    //             $receiverId = $order[0]['user_id'];
+    //             if ($receiverId == $senderId) {
+    //                 echo json_encode(['success' => false, 'message' => 'Cannot send message to self']);
+    //                 exit;
+    //             }
+    //             error_log("Receiver ID: $receiverId");
+    //             $this->orderModel->saveMessage($orderId, $senderId, $receiverId, $messageContent);
+    //         } else {
+    //             // Customer to all admins: Create a message for each admin
+    //             $admins = $this->orderModel->getAllAdmins();
+    //             if (empty($admins)) {
+    //                 echo json_encode(['success' => false, 'message' => 'No admins available']);
+    //                 exit;
+    //             }
+    //             foreach ($admins as $admin) {
+    //                 $receiverId = $admin['id'];
+    //                 if ($receiverId == $senderId) {
+    //                     continue; // Skip if the admin is the sender (unlikely)
+    //                 }
+    //                 error_log("Receiver ID: $receiverId");
+    //                 $this->orderModel->saveMessage($orderId, $senderId, $receiverId, $messageContent);
+    //             }
+    //         }
+
+    //         echo json_encode(['success' => true, 'message' => 'Message sent successfully']);
+    //         exit;
+    //     } catch (Exception $e) {
+    //         error_log("Error in sendMessage: " . $e->getMessage());
+    //         echo json_encode(['success' => false, 'message' => 'Server error: ' . $e->getMessage()]);
+    //         exit;
+    //     }
+    // }
     public function sendMessage() {
-        header('Content-Type: application/json; charset=UTF-8');
-        try {
-            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-                echo json_encode(['success' => false, 'message' => 'Invalid request method']);
-                exit;
-            }
-
-            $orderId = $_POST['orderId'] ?? null;
-            $messageContent = $_POST['messageContent'] ?? null;
-            $senderId = $_SESSION['user_id'] ?? null;
-
-            if (!$senderId) {
-                echo json_encode(['success' => false, 'message' => 'User not authenticated']);
-                exit;
-            }
-            if (!$messageContent || trim($messageContent) === '') {
-                echo json_encode(['success' => false, 'message' => 'Message content is required']);
-                exit;
-            }
-            if ($orderId && (!is_numeric($orderId) || $orderId <= 0)) {
-                echo json_encode(['success' => false, 'message' => 'Invalid order ID']);
-                exit;
-            }
-
-            // Determine if sender is admin by querying the users table
-            $user = $this->orderModel->getUserById($senderId);
-            if (!$user || !isset($user['role'])) {
-                echo json_encode(['success' => false, 'message' => 'User role not found']);
-                exit;
-            }
-            $isAdmin = $user['role'] === 'admin';
-            error_log("Sender ID: $senderId, Is Admin: " . ($isAdmin ? 'true' : 'false') . ", Order ID: $orderId");
-
-            if ($isAdmin) {
-                // Admin to customer: Send one message to the customer
-                $order = $this->orderModel->getOrderById($orderId);
-                if (!$order || !isset($order[0]['user_id'])) {
-                    echo json_encode(['success' => false, 'message' => 'Customer not found for this order']);
-                    exit;
-                }
-                $receiverId = $order[0]['user_id'];
-                if ($receiverId == $senderId) {
-                    echo json_encode(['success' => false, 'message' => 'Cannot send message to self']);
-                    exit;
-                }
-                error_log("Receiver ID: $receiverId");
-                $this->orderModel->saveMessage($orderId, $senderId, $receiverId, $messageContent);
-            } else {
-                // Customer to all admins: Create a message for each admin
-                $admins = $this->orderModel->getAllAdmins();
-                if (empty($admins)) {
-                    echo json_encode(['success' => false, 'message' => 'No admins available']);
-                    exit;
-                }
-                foreach ($admins as $admin) {
-                    $receiverId = $admin['id'];
-                    if ($receiverId == $senderId) {
-                        continue; // Skip if the admin is the sender (unlikely)
-                    }
-                    error_log("Receiver ID: $receiverId");
-                    $this->orderModel->saveMessage($orderId, $senderId, $receiverId, $messageContent);
-                }
-            }
-
-            echo json_encode(['success' => true, 'message' => 'Message sent successfully']);
-            exit;
-        } catch (Exception $e) {
-            error_log("Error in sendMessage: " . $e->getMessage());
-            echo json_encode(['success' => false, 'message' => 'Server error: ' . $e->getMessage()]);
+    header('Content-Type: application/json; charset=UTF-8');
+    try {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['success' => false, 'message' => 'Invalid request method']);
             exit;
         }
+
+        $orderId = $_POST['orderId'] ?? null;
+        $messageContent = $_POST['messageContent'] ?? null;
+        $senderId = $_SESSION['user_id'] ?? null;
+
+        if (!$senderId) {
+            echo json_encode(['success' => false, 'message' => 'User not authenticated']);
+            exit;
+        }
+        if (!$messageContent || trim($messageContent) === '') {
+            echo json_encode(['success' => false, 'message' => 'Message content is required']);
+            exit;
+        }
+        if ($orderId && (!is_numeric($orderId) || $orderId <= 0)) {
+            echo json_encode(['success' => false, 'message' => 'Invalid order ID']);
+            exit;
+        }
+
+        // Get sender info
+        $user = $this->orderModel->getUserById($senderId);
+        if (!$user || !isset($user['role'])) {
+            echo json_encode(['success' => false, 'message' => 'User role not found']);
+            exit;
+        }
+        $isAdmin = $user['role'] === 'admin';
+        $senderUsername = $user['username'] ?? 'Unknown';
+
+        if ($isAdmin) {
+            $order = $this->orderModel->getOrderById($orderId);
+            if (!$order || !isset($order[0]['user_id'])) {
+                echo json_encode(['success' => false, 'message' => 'Customer not found for this order']);
+                exit;
+            }
+            $receiverId = $order[0]['user_id'];
+            if ($receiverId == $senderId) {
+                echo json_encode(['success' => false, 'message' => 'Cannot send message to self']);
+                exit;
+            }
+
+            $this->orderModel->saveMessage($orderId, $senderId, $receiverId, $messageContent);
+        } else {
+            $admins = $this->orderModel->getAllAdmins();
+            if (empty($admins)) {
+                echo json_encode(['success' => false, 'message' => 'No admins available']);
+                exit;
+            }
+
+            foreach ($admins as $admin) {
+                $receiverId = $admin['id'];
+                if ($receiverId == $senderId) {
+                    continue;
+                }
+                $this->orderModel->saveMessage($orderId, $senderId, $receiverId, $messageContent);
+            }
+
+            // ✅ Send to Telegram after customer sends message
+            $this->sendTelegramChatMessage($senderUsername, $messageContent, $orderId);
+        }
+
+        echo json_encode(['success' => true, 'message' => 'Message sent successfully']);
+        exit;
+    } catch (Exception $e) {
+        error_log("Error in sendMessage: " . $e->getMessage());
+        echo json_encode(['success' => false, 'message' => 'Server error: ' . $e->getMessage()]);
+        exit;
     }
+}
+
     // get messages for chat controller
     public function getMessages() {
         header('Content-Type: application/json; charset=UTF-8');
@@ -441,6 +516,7 @@ class OrderController extends BaseadminController {
             }
     
             $messages = $this->orderModel->getMessagesByOrder($orderId, $userId);
+            
             echo json_encode(['success' => true, 'messages' => $messages]);
             exit;
         } catch (Exception $e) {
@@ -449,6 +525,66 @@ class OrderController extends BaseadminController {
             exit;
         }
     }
+
+    private function sendTelegramMessage($order) {
+        $botToken = '8388937134:AAGooYX9MzhqzCG4OA9wyPpTSTFPOgpz668';
+        $chatId = '1461253065';
+
+        $message = "<b>🛒 New Order Placed</b>\n";
+        $message .= "🆔 <b>Order ID:</b> " . $order['order_id'] . "\n";
+        $message .= "👤 <b>User ID:</b> " . $order['user_id'] . "\n";
+        $message .= "💰 <b>Total:</b> " . number_format($order['totalprice'], 2) . " " . strtoupper($order['payments']) . "\n";
+        $message .= "📍 <b>Location ID:</b> " . $order['location_id'] . "\n";
+        $message .= "📦 <b>Status:</b> " . $order['orderstatus'] . "\n";
+        $message .= "🕒 <b>Date:</b> " . date('M d, Y H:i');
+
+        $url = "https://api.telegram.org/bot$botToken/sendMessage";
+        $data = [
+            'chat_id' => $chatId,
+            'text' => $message,
+            'parse_mode' => 'HTML'
+        ];
+
+        $options = [
+            'http' => [
+                'method'  => 'POST',
+                'header'  => "Content-Type: application/x-www-form-urlencoded\r\n",
+                'content' => http_build_query($data)
+            ]
+        ];
+
+        file_get_contents($url, false, stream_context_create($options));
+    }
+
+    // Send chat message to Telegram
+    private function sendTelegramChatMessage($username, $messageContent, $orderId) {
+        $botToken = '8388937134:AAGooYX9MzhqzCG4OA9wyPpTSTFPOgpz668';
+        $chatId = '1461253065';
+
+        $message = "<b>💬 New Chat Message</b>\n";
+        $message .= "👤 <b>Sender:</b> " . htmlspecialchars($username) . "\n";
+        $message .= "🆔 <b>Order ID:</b> " . htmlspecialchars($orderId) . "\n";
+        $message .= "💬 <b>Message:</b> " . htmlspecialchars($messageContent) . "\n";
+        $message .= "🕒 <b>Date:</b> " . date('M d, Y H:i');
+
+        $url = "https://api.telegram.org/bot$botToken/sendMessage";
+        $data = [
+            'chat_id' => $chatId,
+            'text' => $message,
+            'parse_mode' => 'HTML'
+        ];
+
+        $options = [
+            'http' => [
+                'method'  => 'POST',
+                'header'  => "Content-Type: application/x-www-form-urlencoded\r\n",
+                'content' => http_build_query($data)
+            ]
+        ];
+
+        file_get_contents($url, false, stream_context_create($options));
+    }
+
 
 }
 ?>
