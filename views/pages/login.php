@@ -36,9 +36,9 @@
       border-radius: 8px;
       padding: 30px;
       text-align: center;
-      background: rgba(41, 153, 0, 0.8);
+      background: rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(8px);
-      color: #fff;
+      color: blue;
       border: 2px solid rgba(89, 0, 255, 0.5);
       backdrop-filter: blur(8px);
       margin-right: 90px;
@@ -50,7 +50,7 @@
     h2 {
       font-size: 2rem;
       margin-bottom: 20px;
-      color: #fff;
+      color: blue;
     }
     .input-field {
       position: relative;
@@ -64,7 +64,7 @@
       top: 50%;
       left: 0;
       transform: translateY(-50%);
-      color: #fff;
+      color: blue;
       font-size: 16px;
       pointer-events: none;
       transition: 0.15s ease;
@@ -76,7 +76,7 @@
       border: none;
       outline: none;
       font-size: 16px;
-      color: #fff;
+      color:blue;
       padding-right: 30px; /* Add padding to the right to create space for the icon */
     }
     .input-field input:focus~label,
@@ -86,7 +86,7 @@
       transform: translateY(-120%);
     }
     .input-field i {
-      color: #fff;
+      color:blue;
       font-size: 18px;
       margin-left: 10px; /* Space between input and icon */
     }
@@ -95,10 +95,10 @@
       align-items: center;
       justify-content: space-between;
       margin: 25px 0 35px 0;
-      color: #fff;
+      color: blue;
     }
     #remember {
-      accent-color: #fff;
+      accent-color: blue;
     }
     .forget label {
       display: flex;
@@ -108,7 +108,7 @@
       margin-left: 8px;
     }
     .wrapper a {
-      color: #efefef;
+      color: blue;
       text-decoration: none;
     }
     .wrapper a:hover {
@@ -116,7 +116,7 @@
     }
     button {
       background: #fff;
-      color: #000;
+      color: blue;
       font-weight: 600;
       border: none;
       padding: 12px 20px;
@@ -127,14 +127,14 @@
       transition: 0.3s ease;
     }
     button:hover {
-      color: #fff;
+      color: blue;
       border-color: #fff;
       background: rgba(255, 255, 255, 0.15);
     }
     .register {
       text-align: center;
       margin-top: 30px;
-      color: #fff;
+      color: blue;
     }
     .register a{
       color: blue;
