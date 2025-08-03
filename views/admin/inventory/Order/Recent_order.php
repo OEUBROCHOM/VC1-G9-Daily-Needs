@@ -8,7 +8,7 @@ $dbname = "dailyneed_db";
 // Handle AJAX requests
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
     try {
-        $conn = new PDO("mysql:host=$servername;port=4306;dbname=$dbname", $username, $password);
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Handle delete request
@@ -41,7 +41,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 
 // Normal page load (non-AJAX)
 try {
-    $conn = new PDO("mysql:host=$servername;port=4306; dbname=$dbname", $username, $password);
+    $conn = new PDO("mysql:host=$servername; dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Handle message request (for simplicity, we'll just echo it; in practice, you'd store or send it)

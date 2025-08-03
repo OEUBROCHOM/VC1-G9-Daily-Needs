@@ -6,7 +6,7 @@
 
         // Constructor to connect to database
         public function __construct($hostname, $dbname, $username, $password) {
-            $dsn = "mysql:host=$hostname;port=4306;dbname=$dbname;charset=UTF8";
+            $dsn = "mysql:host=$hostname;dbname=$dbname;charset=UTF8";
 
             try {
                 $this->db = new PDO($dsn, $username, $password);

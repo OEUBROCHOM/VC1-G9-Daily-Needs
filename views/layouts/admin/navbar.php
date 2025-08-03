@@ -30,7 +30,7 @@ function sendTelegramMessage($chatId, $message, $botToken) {
 }
 
 try {
-    $conn = new PDO("mysql:host=$servername;port=4306;dbname=$dbname", $username, $password);
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $todayStart = date('Y-m-d H:i:s', strtotime('-24 hours'));

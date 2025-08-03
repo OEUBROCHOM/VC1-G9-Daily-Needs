@@ -368,7 +368,7 @@
                 ini_set('display_startup_errors', 1);
                 error_reporting(E_ALL);
                 try {
-                    $db = new PDO("mysql:host=localhost;port=4306;dbname=dailyneed_db", "root", "");
+                    $db = new PDO("mysql:host=localhost;dbname=dailyneed_db", "root", "");
                     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                     // Total Users
