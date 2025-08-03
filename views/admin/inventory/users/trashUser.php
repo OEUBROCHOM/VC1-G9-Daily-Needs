@@ -226,7 +226,17 @@ if (!isset($_SESSION['user_id'])) {
                             <?php foreach ($trashUsers as $user): ?>
                                 <tr data-id="<?= htmlspecialchars($user['id']) ?>">
                                     <td class="checkbox"><input type="checkbox" class="recycleCheckbox form-check-input" data-id="<?= htmlspecialchars($user['id']) ?>"></td>
-                                    <td><img src="/<?= htmlspecialchars($user['profile']) ?>" alt="Profile" class="profile-img"></td>
+                                    <td>
+                                        <?php
+                                            $profilePath = !empty($user['profile']) ? '/' . htmlspecialchars($user['profile']) : '/views/assets/images/userPlaceHolder.png';
+                                        ?>
+                                        <img 
+                                            src="<?= $profilePath ?>" 
+                                            onerror="this.onerror=null; this.src='/views/assets/images/userPlaceHolder.png';" 
+                                            alt="Profile" 
+                                            class="profile-img">
+                                    </td>
+
                                     <td><?= htmlspecialchars($user['username']) ?></td>
                                     <td><?= htmlspecialchars($user['email']) ?></td>
                                     <td><?= htmlspecialchars($user['phone']) ?></td>

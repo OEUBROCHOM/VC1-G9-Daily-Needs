@@ -8,7 +8,7 @@ $dbname = "dailyneed_db";
 // Handle AJAX requests
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
     try {
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $conn = new PDO("mysql:host=$servername;port=4306;dbname=$dbname", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Handle delete request
@@ -40,7 +40,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 }
 
 try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn = new PDO("mysql:host=$servername;port=4306;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $itemsPerPage = 10;
@@ -294,10 +294,10 @@ try {
                                                         class="block px-3 py-2 hover:bg-gray-100 dropdown-item w-full text-left">
                                                         <i class="fas fa-edit text-green-600 mr-2"></i> Edit
                                                     </button>
-                                                    <button onclick="showMessage('<?php echo $order['id']; ?>')"
+                                                    <!-- <button onclick="showMessage('<?php echo $order['id']; ?>')"
                                                         class="block px-3 py-2 hover:bg-gray-100 dropdown-item w-full text-left">
                                                         <i class="fas fa-envelope text-purple-600 mr-2"></i> Message
-                                                    </button>
+                                                    </button> -->
                                                     <button onclick="showDelete('<?php echo $order['id']; ?>')"
                                                         class="block px-3 py-2 hover:bg-gray-100 dropdown-item w-full text-left">
                                                         <i class="fas fa-trash text-red-600 mr-2"></i> Delete

@@ -12,10 +12,10 @@
         <!-- App Badges Section -->
         <div class="d-flex align-items-center justify-content-start justify-content-md-center mt-3" style="gap: 0px;">
           <a href="#" class="app-badge d-inline-block">
-            <img src="profiles/play store.png" alt="Google Play" class="img-fluid" style="height: 90px; width: auto; max-width: 100%;">
+            <img src="/views/assets/images/google.png" alt="Google Play" class="img-fluid" style="height: 90px; width: auto; max-width: 100%;">
           </a>
           <a href="#" class="app-badge d-inline-block">
-            <img src="profiles/app.png" alt="App Store" class="img-fluid" style="height: 90px; width: auto; max-width: 100%;">
+            <img src="/views/assets/images/appStore.png" alt="App Store" class="img-fluid" style="height: 65px; width: 65px;  border-radius: 100px;">
           </a>
         </div>
       </div>

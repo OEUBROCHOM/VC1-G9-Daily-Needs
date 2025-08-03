@@ -1,23 +1,32 @@
-<div class="container-addproduct mt-5">
-        <h2 class="mb-4">Add New Product</h2>
-        
-        <form action="/products/store" method="POST" enctype="multipart/form-data">
+<div class="add-product-wrapper">
+    <h2 class="title">Add New Product</h2>
+    
+    <form action="/products/store" method="POST" enctype="multipart/form-data" class="add-product-form">
+        <!-- Left: Image Preview -->
+        <div class="form-image">
+            <label for="imageURL" class="form-label">Product Image</label>
+            <input type="file" id="imageURL" name="imageURL" accept="image/*" required>
+            <div id="imagePreview" class="image-preview mt-3"></div>
+        </div>
+
+        <!-- Right: Product Info -->
+        <div class="form-fields">
             <!-- Product Name -->
             <div class="mb-3">
                 <label for="productName" class="form-label">Product Name</label>
-                <input type="text" class="form-control" id="productName" name="productname" required>
+                <input type="text" id="productName" name="productname" required>
             </div>
 
             <!-- Description -->
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" id="description" name="descriptions" rows="3" required></textarea>
+                <textarea id="description" name="descriptions" rows="3" required></textarea>
             </div>
 
-            <!-- Categories -->
+            <!-- Category -->
             <div class="mb-3">
                 <label for="category" class="form-label">Category</label>
-                <select class="form-select" id="category" name="categories" required>
+                <select id="category" name="categories" required>
                     <option value="" disabled selected>Select Category</option>
                     <option value="Drinking Water">Drinking Water</option>
                     <option value="Tissue">Tissue</option>
@@ -34,85 +43,184 @@
             <!-- Price -->
             <div class="mb-3">
                 <label for="price" class="form-label">Price ($)</label>
-                <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+                <input type="number" id="price" name="price" step="0.01" required>
             </div>
 
             <!-- Stock Quantity -->
             <div class="mb-3">
                 <label for="stockQuantity" class="form-label">Stock Quantity</label>
-                <input type="number" class="form-control" id="stockQuantity" name="stockquantity" required>
+                <input type="number" id="stockQuantity" name="stockquantity" required>
             </div>
 
-            <!-- Image URL -->
-            <div class="mb-3">
-                <label for="imageURL" class="form-label">Product Image</label>
-                <input type="file" class="form-control" id="imageURL" name="imageURL" required>
+            <!-- Buttons -->
+            <div class="action-buttons">
+                <button type="submit" class="btn-primary">Add Product</button>
+                <a href="/products" class="btn-secondary">Cancel</a>
             </div>
+        </div>
+    </form>
+</div>
 
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary">Add Product</button>
-            <a href="/products" class="btn btn-secondary">Cancel</a>
-        </form>
-    </div>
-    <style>
-        .container-addproduct  {
-        background: #ffffff;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        max-width: 700px;
+<style>
+    .add-product-wrapper {
+        max-width: 1000px;
+        background: #fff;
+        padding: 40px;
         margin: 50px auto;
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
 
-    h2 {
-        font-weight: 700;
-        color:rgb(29, 54, 243);
+    .title {
         text-align: center;
+        font-size: 2.2rem;
+        color: #1d36f3;
+        margin-bottom: 2rem;
+        font-weight: 700;
+        text-transform: uppercase;
     }
 
-    label.form-label {
-        font-weight: 500;
-        color: #555555;
+    .add-product-form {
+        display: flex;
+        gap: 40px;
+        flex-wrap: wrap;
     }
 
-    .form-control, .form-select {
-        border-radius: 8px;
-        border: 1px solidrgb(88, 156, 224);
-        transition: border-color 0.3s, box-shadow 0.3s;
+    .form-image {
+        flex: 1;
+        min-width: 280px;
     }
 
-    .form-control:focus, .form-select:focus {
+    .form-fields {
+        flex: 2;
+        min-width: 300px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea,
+    input[type="file"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #58a2e0;
+        border-radius: 10px;
+        font-size: 1rem;
+        margin-top: 4px;
+        transition: 0.3s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
         border-color: #0d6efd;
-        box-shadow: 0 0 5px rgba(6, 61, 144, 0.3);
+        box-shadow: 0 0 6px rgba(13, 110, 253, 0.3);
+        outline: none;
     }
 
-    button.btn-primary {
-        background-color: #0d6efd;
-        border-color: #0d6efd;
-        border-radius: 8px;
-        padding: 10px 20px;
-        font-weight: 500;
+    .image-preview {
+        margin-top: 10px;
+        border: 2px dashed #58a2e0;
+        border-radius: 10px;
+        background-color: #f1f3f5;
+        min-height: 240px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
     }
 
-    button.btn-primary:hover {
-        background-color: #0b5ed7;
-        border-color: #0a58ca;
-    }
-
-    .btn-secondary {
-        border-radius: 8px;
-        padding: 10px 20px;
-        margin-left: 10px;
-        font-weight: 500;
+    .image-preview img {
+        width: 100%;
+        height: auto;
+        max-height: 240px;
+        object-fit: contain;
+        border-radius: 10px;
     }
 
     .mb-3 {
-        margin-bottom: 1.5rem;
-    }
-    @media (max-width: 768px) {
-       form{
-        padding: 20px;
-       }
+        margin-bottom: 20px;
     }
 
-    </style>
+    .action-buttons {
+        display: flex;
+        justify-content: flex-start;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 12px 24px;
+        font-size: 1.1rem;
+        border-radius: 10px;
+        font-weight: 500;
+        border: none;
+        transition: 0.3s;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .btn-primary {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0b5ed7;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    @media (max-width: 768px) {
+        .add-product-form {
+            flex-direction: column;
+        }
+
+        .form-image,
+        .form-fields {
+            width: 100%;
+        }
+
+        .image-preview {
+            min-height: 180px;
+        }
+
+        .image-preview img {
+            max-height: 180px;
+        }
+    }
+</style>
+
+<script>
+    document.getElementById('imageURL').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('imagePreview');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.innerHTML = `<img src="${e.target.result}" alt="Product Preview">`;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.innerHTML = '';
+        }
+    });
+</script>

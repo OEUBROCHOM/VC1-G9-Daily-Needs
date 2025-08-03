@@ -20,12 +20,88 @@ class OrderModel {
                     'payments' => $currency
                 ]
             );
-            return $this->db->lastInsertId();
+
+            $orderId = $this->db->lastInsertId();
+
+            // ✅ Send Telegram Notification
+            $this->sendTelegramMessage([
+                'order_id' => $orderId,
+                'user_id' => $user_id,
+                'payment_method_id' => $payment_method_id,
+                'location_id' => $location_id,
+                'totalprice' => $total_price,
+                'orderstatus' => $order_status,
+                'payments' => $currency
+            ]);
+
+            return $orderId;
         } catch (Exception $e) {
             error_log("Error creating order: " . $e->getMessage());
             throw $e;
         }
     }
+
+        private function sendTelegramMessage($order) {
+            $botToken = '8388937134:AAGooYX9MzhqzCG4OA9wyPpTSTFPOgpz668';
+            $chatId = '1461253065';
+
+            $message = "<b>🛒 New Order Placed</b>\n";
+            $message .= "🆔 <b>Order ID:</b> " . $order['order_id'] . "\n";
+            $message .= "👤 <b>User ID:</b> " . $order['user_id'] . "\n";
+            $message .= "💰 <b>Total:</b> " . number_format($order['totalprice'], 2) . " " . strtoupper($order['payments']) . "\n";
+            $message .= "📍 <b>Location ID:</b> " . $order['location_id'] . "\n";
+            $message .= "📦 <b>Status:</b> " . $order['orderstatus'] . "\n";
+            $message .= "🕒 <b>Date:</b> " . date('M d, Y H:i');
+
+            $url = "https://api.telegram.org/bot$botToken/sendMessage";
+            $data = [
+                'chat_id' => $chatId,
+                'text' => $message,
+                'parse_mode' => 'HTML'
+            ];
+
+            $options = [
+                'http' => [
+                    'method'  => 'POST',
+                    'header'  => "Content-Type: application/x-www-form-urlencoded\r\n",
+                    'content' => http_build_query($data)
+                ]
+            ];
+
+            file_get_contents($url, false, stream_context_create($options));
+        }
+
+        // Message handling methods
+        private function sendTelegramChatMessage($senderName, $messageContent, $orderId = null) {
+            $botToken = '8388937134:AAGooYX9MzhqzCG4OA9wyPpTSTFPOgpz668';
+            $chatId = '1461253065';
+
+            $message = "<b>💬 New Message from Customer</b>\n";
+            $message .= "👤 <b>Sender:</b> " . htmlspecialchars($senderName) . "\n";
+            if ($orderId) {
+                $message .= "🆔 <b>Order ID:</b> " . $orderId . "\n";
+            }
+            $message .= "📝 <b>Message:</b> " . htmlspecialchars($messageContent);
+
+            $url = "https://api.telegram.org/bot$botToken/sendMessage";
+            $data = [
+                'chat_id' => $chatId,
+                'text' => $message,
+                'parse_mode' => 'HTML'
+            ];
+
+            $options = [
+                'http' => [
+                    'method'  => 'POST',
+                    'header'  => "Content-Type: application/x-www-form-urlencoded\r\n",
+                    'content' => http_build_query($data)
+                ]
+            ];
+
+            file_get_contents($url, false, stream_context_create($options));
+        }
+
+
 
     public function addOrderItem($order_id, $product_id, $quantity) {
         try {
@@ -118,7 +194,6 @@ class OrderModel {
 
             return true;
         } catch (Exception $e) {
-            $this->db->rollBack();
             error_log("Error deleting order: " . $e->getMessage());
             throw $e;
         }
@@ -381,6 +456,7 @@ class OrderModel {
             throw $e;
         }
     }
+    
 
 }
 ?>
