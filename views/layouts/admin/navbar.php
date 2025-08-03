@@ -55,67 +55,67 @@ try {
 <!-- [ Pre-loader ] End -->
  <!-- [ Sidebar Menu ] start -->
 <nav class="pc-sidebar"style="border-right: none !important; border-left: none !important;">
-  <div class="navbar-wrapper" style="background:#1C2526">
+  <div class="navbar-wrapper" style="background:#CCCCFF;">
     <div class="m-header">
       <a href="/admin" class="b-brand text-primary text-align:center;">
         <!-- ========   Change your logo from here   ============ -->
         <img src="../assets/images/Daily.jpg" class="img-fluid logo-lg" alt="logo" style="width: 55px; height: 55px; border-radius: 50%;">
-        <span style="margin-left: 20px; color: white;">DAILY NEEDS</span>
+        <span style="margin-left: 20px; color: black;">DAILY NEEDS</span>
       </a>
     </div>
     <!-- Nav move down inven tory -->
-    <div class="navbar-content "style="background:#1C2526">
+    <div class="navbar-content "style="background: white;">
       <ul class="pc-navbar">
-        <li class="pc-item">
+        <li class="pc-item" style="margin-top: 40px;">
           <a href="/admin" class="pc-link"style="color:white;">
-            <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-            <span class="pc-mtext">Dashboard</span>
+            <span class="pc-micon" style="color:black;"><i class="ti ti-dashboard"></i></span>
+            <span class="pc-mtext" style="color:black;">Dashboard</span>
           </a>
         </li>
 
         <li class="pc-item pc-caption"style="color:white;">
-          <label>Components</label>
+          <label style="color:black;">Components</label>
           <i class="ti ti-dashboard"></i>
         </li>
         <li class="pc-item pc-hasmenu ">
             <a href="#!" class="pc-link" style="color:white;">
-                    <span class="pc-micon"><i class="ti ti-stack"></i></span>
-                    <span class="pc-mtext ">Product Management</span>
-                    <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
+                    <span class="pc-micon" style="color:black;"><i class="ti ti-stack" style="color:black;"></i></span>
+                    <span class="pc-mtext " style="color:black;">Product Management</span>
+                    <span class="pc-arrow" style="color:black;"><i data-feather="chevron-right"></i></span>
             </a>
             <ul class="pc-submenu" id="order-submenu" style="display: none;">
                 <li class="pc-item"style="color:white;">
-                    <a class="pc-link" href="/products"style="color:white;">
-                        <i class="ti ti-package"></i> All Product
+                    <a class="pc-link" href="/products"style="color:black;">
+                        <i class="ti ti-package" style="color:black;"></i> All Product
                     </a>
                 </li>
                 <li class="pc-item">
-                    <a class="pc-link" href="/products/add-discount"style="color:white;">
-                        <i class="ti ti-discount"></i> Add Discount
+                    <a class="pc-link" href="/products/add-discount"style="color:black;">
+                        <i class="ti ti-discount" style="color:black;"></i> Add Discount
                     </a>
                 </li>
             </ul>
 
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="#!" class="pc-link"style="color:white;">
+          <a href="#!" class="pc-link"style="color:black;">
                 <span class="pc-micon"><i class="ti ti-stack"></i></span>
-                <span class="pc-mtext">Stock Management</span>
-                <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
+                <span class="pc-mtext" style="color:black;">Stock Management</span>
+                <span class="pc-arrow" style="color:black;"><i data-feather="chevron-right"></i></span>
           </a>
           <ul class="pc-submenu" id="order-submenu" style="display: none;">
                 <li class="pc-item">
-                    <a class="pc-link" href="/stock"style="color:white;">
+                    <a class="pc-link" href="/stock"style="color:black;">
                         <i class="bi bi-box-seam"></i> All Stocks
                     </a>
                 </li>
                 <li class="pc-item">
-                    <a class="pc-link" href="/stock/in"style="color:white;">
+                    <a class="pc-link" href="/stock/in"style="color:black;">
                         <i class="bi bi-box-arrow-in-down"></i> Stock In
                     </a>
                 </li>
                 <li class="pc-item">
-                    <a class="pc-link" href="/stock/out"style="color:white;">
+                    <a class="pc-link" href="/stock/out"style="color:black;">
                         <i class="bi bi-box-arrow-up"></i> Stock Out
                     </a>
                 </li>
@@ -123,54 +123,54 @@ try {
 
         </li>
         <li class="pc-item">
-          <a href="/salesreport" class="pc-link"style="color:white;">
+          <a href="/salesreport" class="pc-link"style="color:black;">
             <span class="pc-micon"><i class="ti ti-report"></i></span>
             <span class="pc-mtext">Sale report</span>
           </a>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="#!" class="pc-link"style="color:white;">
+          <a href="#!" class="pc-link"style="color:black;">
                 <span class="pc-micon"><i class="ti ti-user"></i></span>
-                <span class="pc-mtext">User Management</span>
+                <span class="pc-mtext" >User Management</span>
                 <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
           </a>
-          <ul class="pc-submenu" id="order-submenu" style="display: none;"style="color:white;">
+          <ul class="pc-submenu" id="order-submenu" style="display: none;"style="color:black;">
                 <li class="pc-item">
-                    <a class="pc-link" href="/users"style="color:white;">
+                    <a class="pc-link" href="/users"style="color:black;">
                         <i class="bi bi-people"></i> All Users
                     </a>
                 </li>
                 <li class="pc-item">
-                    <a class="pc-link" href="/users/active"style="color:white;">
-                        <i class="bi bi-person-check"  style="color: white;"></i> Active User
+                    <a class="pc-link" href="/users/active"style="color:black;">
+                        <i class="bi bi-person-check"  style="color:black;"></i> Active User
                     </a>
                 </li>
                 <li class="pc-item">
-                    <a class="pc-link" href="/users/trash"style="color:white;">
+                    <a class="pc-link" href="/users/trash"style="color:black;">
                         <i class="bi bi-trash"></i> Trash
                     </a>
                 </li>
           </ul>
         </li>
         <li class="pc-item pc-hasmenu">
-            <a href="#!" class="pc-link"style="color:white;">
+            <a href="#!" class="pc-link"style="color:black;">
                 <span class="pc-micon"><i class="ti ti-shopping-cart"></i></span>
                 <span class="pc-mtext">Order Management</span>
                 <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
             </a>
-            <ul class="pc-submenu" id="order-submenu" style="display: none;"style="color:white;">
-                <li class="pc-item"><a class="pc-link"style="color:white;" href="/All_order">All Orders</a></li>
-                <li class="pc-item"><a class="pc-link"style="color:white;" href="/recent_order">Recent Orders</a></li>
-                <li class="pc-item"><a class="pc-link"style="color:white;" href="/order_history">Order History</a></li>
-                <li class="pc-item"><a class="pc-link"style="color:white;" href="/order_pending">Pending Orders</a></li>
-                <li class="pc-item"><a class="pc-link"style="color:white;" href="/old_order">Older Orders</a></li>
+            <ul class="pc-submenu" id="order-submenu" style="display: none;"style="color:black;">
+                <li class="pc-item"><a class="pc-link"style="color:black;" href="/All_order">All Orders</a></li>
+                <li class="pc-item"><a class="pc-link"style="color:black;" href="/recent_order">Recent Orders</a></li>
+                <li class="pc-item"><a class="pc-link"style="color:black;" href="/order_history">Order History</a></li>
+                <li class="pc-item"><a class="pc-link"style="color:black;" href="/order_pending">Pending Orders</a></li>
+                <li class="pc-item"><a class="pc-link"style="color:black;" href="/old_order">Older Orders</a></li>
             </ul>
         </li>
 
         <li class="pc-item">
           <a href="/somepage" class="pc-link">
-            <span class="pc-micon"><i class="ti ti-brand-chrome"style="color:white;"></i></span>
-            <span class="pc-mtext"style="color:white;">Sample page</span>
+            <span class="pc-micon"><i class="ti ti-brand-chrome"style="color:black;"></i></span>
+            <span class="pc-mtext"style="color:black;">Sample page</span>
           </a>
         </li>
       </ul>
@@ -179,7 +179,7 @@ try {
 </nav>
     <!-- [ Sidebar Menu ] end --> 
      <!-- [ Header Topbar ] start -->
-    <header class="pc-header" style="background: #1C2526">
+    <header class="pc-header" style="background:#CCCCFF;">
         <div class="header-wrapper"> <!-- [Mobile Media Block] start -->
             <div class="me-auto pc-mob-drp">
                 <ul class="list-unstyled">
@@ -212,7 +212,7 @@ try {
                     </li>
                     <li class="pc-h-item d-none d-md-inline-flex ">
                     <div class="animated-border">
-                        <input type="search" class="form-control" placeholder="Search here. . ." style="border: none; outline: none; border-radius: 50px; box-shadow: none;"/>
+                        <input type="search" class="form-control" placeholder="Search here" style="border: none; outline: none; border-radius: 50px; box-shadow: none;"/>
                     </div>
 
                     </li>

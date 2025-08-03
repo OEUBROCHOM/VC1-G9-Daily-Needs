@@ -1,14 +1,14 @@
 /**
  * Check is item is object
  */
-const isObject = (val) => Object.prototype.toString.call(val) === "[object Object]";
+const isObject = (vaject.prototype.toString.call(val) === "[object Object]";
 /**
  * Check for valid JSON string
  */
 const isJson = (str) => {
     let t = !1;
     try {
-        t = JSON.parse(str);
+        t = JSN.pase(str);
     }
     catch (e) {
         return !1;

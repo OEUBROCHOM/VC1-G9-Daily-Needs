@@ -5,6 +5,12 @@ if (session_status() == PHP_SESSION_NONE) {
 if (isset($_SESSION['user_id'])) : ?>
 
 
+  <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+  <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/mapdata/countries/kh/kh-all.js"></script>
+  <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+  <script src="https://code.highcharts.com/mapdata/countries/kh/kh-all.js"></script>
+
 
   <!-- [ Main Content ] start -->
   <div class="row">
@@ -421,7 +427,71 @@ if (isset($_SESSION['user_id'])) : ?>
         </div>
       </div>
     </div>
-  </div>
+    
+    <div class="col-md-12 col-xl-8 mt-4">
+      <h5 class="mb-3">Cambodia Sales Map</h5>
+      <div class="card">
+        <div class="card-body">
+          <div id="cambodia-map-chart" style="height: 450px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add these right before your closing </body> tag -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const map = L.map('cambodia-map-chart').setView([12.5657, 104.9910], 6);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        // Sales data (city, lat, lng, sales)
+        const salesData = [
+          { city: "Phnom Penh", lat: 11.5564, lng: 104.9282, sales: 430 },
+          { city: "Siem Reap", lat: 13.3671, lng: 103.8448, sales: 180 },
+          { city: "Sihanoukville", lat: 10.6275, lng: 103.5246, sales: 120 },
+          { city: "Battambang", lat: 13.0957, lng: 103.2022, sales: 150 },
+          { city: "Kampong Cham", lat: 11.9934, lng: 105.4635, sales: 90 }
+        ];
+        
+        // Add markers with sales data
+        salesData.forEach(location => {
+          const radius = Math.sqrt(location.sales) * 2;
+          L.circleMarker([location.lat, location.lng], {
+            radius: radius,
+            fillColor: location.city === "Phnom Penh" ? "#e67700" : "#5f3dc4",
+            color: "#fff",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+          })
+          .addTo(map)
+          .bindPopup(`<b>${location.city}</b><br>Sales: ${location.sales}`);
+        });
+      });
+     </script>
+
+    <div class="col-md-12 col-xl-4 mt-4">
+      <h5 class="mb-3">Phnom Penh Map</h5>
+           <div class="card">
+              <div class="card-body p-0" style="height: 400px;">
+                      <!-- Embed Google Maps for Phnom Penh -->
+                   <iframe 
+                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d488795.5702372034!2d104.75595055!3d11.5448729!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109513dc76a6be3%3A0x9c010ee85ab525bb!2sPhnom%20Penh%2C%20Cambodia!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" 
+                          width="100%" 
+                          height="100%" 
+                          style="border:0;" 
+                          allowfullscreen="" 
+                          loading="lazy">
+                      </iframe>
+                  </div>
+              </div>
+        </div>
+</div> 
+    
 <?php
 else:
   $this->redirect("/F_login");
